@@ -1,0 +1,64 @@
+// ─────────────────────────────────────────────
+//  COLORS
+// ─────────────────────────────────────────────
+$color-bg:              #F5F0E8;
+$color-bg-alt:          #EDE7D9;
+$color-surface:         #FDFAF5;
+$color-surface-up:      #F0E8D8;
+$color-border:          #DDD4C0;
+$color-border-strong:   #C4B89A;
+
+$color-terracotta:      #C4522A;
+$color-terra-muted:     #E8C4AD;
+$color-gold:            #A67C2E;
+$color-gold-muted:      #EDE0B0;
+$color-indigo:          #3D4F9E;
+$color-indigo-muted:    #D0D6F5;
+$color-sage:            #3D7A58;
+$color-sage-muted:      #C4E0D0;
+
+$color-ink:             #1E1A14;
+$color-ink-mid:         #6B5F4E;
+$color-ink-light:       #A89880;
+
+$color-error:           #B83020;
+$color-error-muted:     #F5DDD8;
+
+// ─────────────────────────────────────────────
+//  WINE TYPE COLORS
+// ─────────────────────────────────────────────
+$wine-types: (
+  "rouge":     ("#E8C4AD", "#8A2A10"),
+  "blanc":     ("#EDE0B0", "#7A5A10"),
+  "liquoreux": ("#F0D8A8", "#7A4A08"),
+  "rose":      ("#F0D0D8", "#8A2848"),
+  "champagne": ("#D0D6F5", "#3D4F9E"),
+  "petillant": ("#C4E0D0", "#3D7A58"),
+);
+
+// ─────────────────────────────────────────────
+//  TYPOGRAPHY
+// ─────────────────────────────────────────────
+$font-display: 'Playfair Display', serif;
+$font-body:    'DM Sans', sans-serif;
+$font-notes:   'Cormorant Garamond', serif;
+
+// ─────────────────────────────────────────────
+//  SPACING
+// ─────────────────────────────────────────────
+$spacing-xs:  4px;
+$spacing-sm:  8px;
+$spacing-md:  16px;
+$spacing-lg:  24px;
+$spacing-xl:  32px;
+$spacing-xxl: 48px;
+
+// ─────────────────────────────────────────────
+//  BORDERS & SHADOWS
+// ─────────────────────────────────────────────
+$radius-sm:  9999px;
+$radius-md:  12px;
+$radius-lg:  16px;
+
+$shadow-card:     0 2px 10px rgba(196, 82, 42, 0.3);
+$shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.1);
