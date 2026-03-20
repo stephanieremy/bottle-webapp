@@ -1,5 +1,5 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Router } from '@angular/router';
 import { BottleService } from '../../core/services/bottle.service';
 import { WineCardComponent } from '../../shared/components/molecules/wine-card/wine-card.component';
@@ -9,7 +9,7 @@ import { Bottle, WineType } from '../../shared/models/bottle.model';
 @Component({
   selector: 'app-wine-list',
   standalone: true,
-  imports: [CommonModule, WineCardComponent, StatCellComponent],
+  imports: [NgClass, WineCardComponent, StatCellComponent],
   templateUrl: './wine-list.component.html',
   styleUrl: './wine-list.component.scss'
 })

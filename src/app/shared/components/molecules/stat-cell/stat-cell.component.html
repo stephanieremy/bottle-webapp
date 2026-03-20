@@ -1,4 +1,4 @@
-<div class="stat-cell" [class.border]="border">
-  <div class="value" [class.small]="small" [style.color]="color">{{ value }}</div>
-  <div class="label">{{ label }}</div>
+<div class="stat-cell" [class.border]="border()">
+  <div class="value" [class.small]="small()" [style.color]="color()">{{ value() }}</div>
+  <div class="label">{{ label() }}</div>
 </div>

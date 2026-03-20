@@ -1,6 +1,6 @@
 <button
-  [ngClass]="[variant, size]"
-  [disabled]="disabled"
-  (click)="!disabled && clicked.emit()">
+  [class]="variant() + ' ' + size()"
+  [disabled]="disabled()"
+  (click)="!disabled() && clicked.emit()">
   <ng-content />
 </button>

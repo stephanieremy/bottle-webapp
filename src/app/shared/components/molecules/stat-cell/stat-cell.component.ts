@@ -1,17 +1,15 @@
-import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-stat-cell',
   standalone: true,
-  imports: [CommonModule],
   templateUrl: './stat-cell.component.html',
   styleUrl: './stat-cell.component.scss'
 })
 export class StatCellComponent {
-  @Input() label!: string;
-  @Input() value!: string;
-  @Input() color?: string;
-  @Input() small = false;
-  @Input() border = false;
+  label = input.required<string>();
+  value = input.required<string>();
+  color = input<string>();
+  small = input<boolean>(false);
+  border = input<boolean>(false);
 }
