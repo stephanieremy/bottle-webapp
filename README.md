@@ -1,31 +1,33 @@
-# 🍷 Vinothèque – Webapp
+# 🍷 Bottle me – Webapp
 
-> Application web de gestion de cave à vin, développée avec Angular 19.
+> Web application for wine cellar management, built with Angular 19.
 
-Webapp complémentaire à l'application mobile [Vinothèque](https://github.com/ton-repo/vinotheque-mobile), construite en React Native. Elle consomme le même backend Java Spring Boot via une API REST.
-
----
-
-## ✨ Fonctionnalités
-
-- 📋 **Liste de vins** — recherche et filtrage par type, appellation, millésime
-- 🔍 **Fiche détail** — toutes les informations d'une bouteille
-- ➕ **Ajout / édition** — formulaire complet pour gérer sa cave
+Companion webapp to the [Bottle me](https://github.com/stephanieremy/bottleme) mobile app, built with React Native. Both consume the same Java Spring Boot backend via a REST API.
 
 ---
 
-## 🛠️ Stack technique
+## ✨ Features
 
-| Couche | Technologie |
+- 📋 **Wine list** — search and filter by type, appellation, vintage
+- 🔍 **Wine detail** — full information about a bottle
+- ➕ **Add / edit** — complete form to manage your cellar
+
+---
+
+## 🛠️ Tech stack
+
+| Layer | Technology |
 |---|---|
 | Framework | Angular 19 (Standalone Components) |
-| Langage | TypeScript |
-| Style | SCSS |
+| Language | TypeScript |
+| Styling | SCSS |
 | State | Signals + RxJS |
-| HTTP | HttpClient + Intercepteur |
-| Formulaires | Reactive Forms |
-| Backend | [Vinothèque API](https://github.com/ton-repo/vinotheque-backend) — Java Spring Boot |
-| Base de données | MongoDB |
+| HTTP | HttpClient + Interceptor |
+| Forms | Reactive Forms |
+| Component library | Storybook |
+| Documentation | Compodoc |
+| Backend | [Bottle me API](https://github.com/stephanieremy/bottle-backend) — Java Spring Boot |
+| Database | MongoDB |
 
 ---
 
@@ -34,47 +36,58 @@ Webapp complémentaire à l'application mobile [Vinothèque](https://github.com/
 ```
 src/
 ├── app/
-│   ├── core/                  # Services singleton, intercepteurs
+│   ├── core/                        # Singleton services, interceptors
 │   │   ├── services/
 │   │   └── interceptors/
-│   ├── shared/                # Composants, pipes et modèles réutilisables
+│   ├── shared/                      # Reusable components, pipes and models
 │   │   ├── components/
+│   │   │   ├── atoms/               # Base UI components (Button, Input, Badge...)
+│   │   │   ├── molecules/           # Composite components (WineCard, StatCell...)
+│   │   │   └── layout/              # Header, Footer
 │   │   ├── pipes/
 │   │   └── models/
-│   └── features/              # Modules fonctionnels (lazy-loaded)
+│   └── features/                    # Lazy-loaded feature modules
 │       ├── wine-list/
 │       ├── wine-detail/
 │       └── wine-form/
-└── styles/                    # Variables SCSS globales
+└── styles/                          # Global SCSS variables and tokens
 ```
 
-L'application suit une architecture **feature-based** avec lazy loading, en utilisant les **Standalone Components** d'Angular 17+.
+The app follows a **feature-based architecture** with lazy loading, using Angular 19 **Standalone Components**.
 
 ---
 
-## 🚀 Lancer le projet
+## 🚀 Getting started
 
-### Prérequis
+### Prerequisites
 
-- Node.js >= 18
+- Node.js >= 22.12
 - Angular CLI >= 19
-- Backend Vinothèque démarré sur `http://localhost:8080`
+- Bottle me API running on `http://localhost:8080`
 
 ### Installation
 
 ```bash
-git clone https://github.com/ton-repo/vinotheque-webapp
-cd vinotheque-webapp
+git clone https://github.com/stephanieremy/bottle-webapp
+cd bottle-webapp
 npm install
 ```
 
-### Développement
+### Development
 
 ```bash
 ng serve
 ```
 
-L'application sera disponible sur `http://localhost:4200`.
+App available at `http://localhost:4200`.
+
+### Storybook
+
+```bash
+npm run storybook
+```
+
+Component library available at `http://localhost:6006`.
 
 ### Build
 
@@ -84,8 +97,9 @@ ng build
 
 ---
 
-## 🔗 Projets liés
+## 🔗 Related projects
 
-- [Vinothèque Mobile](https://github.com/stephanieremy/bottleme) — Application React Native
-- [Vinothèque API](https://github.com/stephanieremy/bottle-backend) — Backend Java Spring Boot
+- [Bottle me Mobile](https://github.com/stephanieremy/bottleme) — React Native app
+- [Bottle me API](https://github.com/stephanieremy/bottle-backend) — Java Spring Boot backend
 
+---
