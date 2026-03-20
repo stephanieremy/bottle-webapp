@@ -1,0 +1,11 @@
+<div class="card" (click)="clicked.emit(bottle)">
+  <div class="card-top">
+    <app-wine-type-badge [type]="bottle.type" />
+    <span class="vintage">{{ bottle.vintage }}</span>
+  </div>
+  <div class="wine-name">{{ bottle.name }}</div>
+  <div class="appellation">{{ bottle.designation }}</div>
+  <div class="card-bottom">
+    <span class="qty">×<span class="qty-value">{{ bottle.quantity }}</span> btl.</span>
+  </div>
+</div>

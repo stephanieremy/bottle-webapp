@@ -1,0 +1,11 @@
+@use 'styles/variables' as *;
+
+.tasting-note {
+  font-family: $font-notes;
+  font-style: italic;
+  font-size: 18px;
+  color: $color-ink-mid;
+  line-height: 1.6;
+  border-left: 2px solid $color-terracotta;
+  padding-left: 16px;
+}

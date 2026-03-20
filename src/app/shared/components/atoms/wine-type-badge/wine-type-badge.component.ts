@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { WineType } from '../../models/bottle.model';
+import { WineType } from '../../../models/bottle.model';
 
 @Component({
   selector: 'app-wine-type-badge',

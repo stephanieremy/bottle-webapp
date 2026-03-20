@@ -1,0 +1,66 @@
+@use 'styles/variables' as *;
+
+.card {
+  background: $color-surface;
+  border: 0.5px solid $color-border;
+  border-radius: $radius-lg;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 1 / 1;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+
+  &:hover {
+    border-color: $color-terracotta;
+    box-shadow: 0 0 0 3px rgba(196, 82, 42, 0.08);
+  }
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.vintage {
+  font-family: $font-display;
+  font-size: 13px;
+  color: $color-ink-light;
+}
+
+.wine-name {
+  font-family: $font-display;
+  font-size: 17px;
+  font-weight: 700;
+  color: $color-ink;
+  line-height: 1.2;
+  flex: 1;
+}
+
+.appellation {
+  font-size: 11px;
+  color: $color-ink-light;
+  margin-top: 5px;
+}
+
+.card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 0.5px solid $color-bg-alt;
+}
+
+.qty {
+  font-size: 12px;
+  color: $color-ink-light;
+  font-family: $font-body;
+}
+
+.qty-value {
+  color: $color-sage;
+  font-weight: 500;
+}

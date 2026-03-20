@@ -1,0 +1,29 @@
+@use 'styles/variables' as *;
+
+.stat-cell {
+  padding: 18px 14px;
+  text-align: center;
+
+  &.border {
+    border-right: 1px solid $color-border;
+  }
+}
+
+.value {
+  font-family: $font-display;
+  font-weight: 800;
+  font-size: 24px;
+  color: $color-ink;
+  line-height: 1.2;
+
+  &.small { font-size: 13px; }
+}
+
+.label {
+  font-family: $font-body;
+  font-size: 10px;
+  color: $color-ink-light;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 4px;
+}
