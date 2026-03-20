@@ -17,6 +17,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "stylePreprocessorOptions": {
+              "includePaths": ["src"]
+            },
             "outputPath": "dist/vinotheque-webapp",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -86,6 +89,9 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
+            "stylePreprocessorOptions": {
+              "includePaths": ["src"]
+            },
             "polyfills": [
               "zone.js",
               "zone.js/testing"
