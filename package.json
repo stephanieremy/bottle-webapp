@@ -7,7 +7,9 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:vinotheque-webapp": "node dist/vinotheque-webapp/server/server.mjs"
+    "serve:ssr:vinotheque-webapp": "node dist/vinotheque-webapp/server/server.mjs",
+    "storybook": "ng run vinotheque-webapp:storybook",
+    "build-storybook": "ng run vinotheque-webapp:build-storybook"
   },
   "private": true,
   "dependencies": {
@@ -26,9 +28,16 @@
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
+    "@angular-devkit/architect": "^0.1902.0",
     "@angular-devkit/build-angular": "^19.2.22",
+    "@angular-devkit/core": "^19.2.0",
     "@angular/cli": "^19.2.22",
     "@angular/compiler-cli": "^19.2.0",
+    "@compodoc/compodoc": "^1.2.1",
+    "@storybook/addon-a11y": "^10.3.1",
+    "@storybook/addon-docs": "^10.3.1",
+    "@storybook/addon-onboarding": "^10.3.1",
+    "@storybook/angular": "^10.3.1",
     "@types/express": "^4.17.17",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^18.18.0",
@@ -38,6 +47,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "storybook": "^10.3.1",
     "typescript": "~5.7.2"
   }
 }

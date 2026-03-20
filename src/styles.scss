@@ -1,7 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap');
 @use 'styles/variables' as *;
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap');
 
 * {
   margin: 0;
@@ -11,8 +10,8 @@
 
 html, body {
   height: 100%;
-  background-color: $color-background;
-  color: $color-text-primary;
+  background-color: $color-bg;
+  color: $color-ink;
   font-family: $font-body;
   font-size: 16px;
   -webkit-font-smoothing: antialiased;

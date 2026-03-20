@@ -1,0 +1,26 @@
+@use 'styles/variables' as *;
+
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  background: $color-bg;
+  border: 1.5px solid $color-border;
+  border-radius: $radius-md;
+  padding: 12px 16px;
+  font-family: $font-notes;
+  font-style: italic;
+  font-size: 16px;
+  color: $color-ink;
+  line-height: 1.6;
+  outline: none;
+  transition: all 0.15s;
+
+  &::placeholder { color: $color-ink-light; }
+
+  &.focused {
+    background: $color-surface;
+    border-color: $color-terracotta;
+    box-shadow: 0 0 0 3px rgba(196, 82, 42, 0.08);
+  }
+}

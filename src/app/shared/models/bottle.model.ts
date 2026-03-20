@@ -1,4 +1,4 @@
-export type WineType = 'RED' | 'WHITE' | 'ROSÉ' | 'SPARKLING' | 'MUTED';
+export type WineType = 'RED' | 'WHITE' | 'PINK' | 'SPARKLING' | 'CHAMPAGNE' | 'MUTED';
 
 export interface Bottle {
   id: string;

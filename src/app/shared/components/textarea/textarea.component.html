@@ -1,0 +1,8 @@
+<textarea
+  [rows]="rows"
+  [placeholder]="placeholder"
+  [disabled]="disabled"
+  [class.focused]="focused"
+  (input)="onInput($event)"
+  (focus)="focused = true; onTouched()"
+  (blur)="focused = false">{{ value }}</textarea>

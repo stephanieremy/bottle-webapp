@@ -1,0 +1,18 @@
+@use 'styles/variables' as *;
+
+.badge {
+  font-family: $font-body;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 3px 9px;
+  border-radius: $radius-sm;
+  display: inline-block;
+
+  &.rouge     { background: #E8C4AD; color: #8A2A10; }
+  &.blanc     { background: #EDE0B0; color: #7A5A10; }
+  &.pink      { background: #F0D0D8; color: #8A2848; }
+  &.petillant { background: #C4E0D0; color: #3D7A58; }
+  &.champagne { background: #D0D6F5; color: #3D4F9E; }
+  &.liquoreux { background: #F0D8A8; color: #7A4A08; }}

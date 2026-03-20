@@ -1,0 +1,10 @@
+<select
+  [disabled]="disabled"
+  [class.focused]="focused"
+  [class.has-value]="value"
+  (change)="onSelect($event)"
+  (focus)="focused = true; onTouched()"
+  (blur)="focused = false">
+  <option value="" disabled [selected]="!value">{{ placeholder }}</option>
+  <option *ngFor="let opt of options" [value]="opt.value">{{ opt.label }}</option>
+</select>
