@@ -1,6 +1,6 @@
 import { Component, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 
 export interface SelectOption {
   value: string;

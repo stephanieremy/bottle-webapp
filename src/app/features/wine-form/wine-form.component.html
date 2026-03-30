@@ -1,1 +1,110 @@
-<p>wine-form works!</p>
+<div class="wine-form">
+
+  <div class="page-header">
+    <a class="back" routerLink="/bottles">← Ma cave</a>
+    <h1 class="page-title">Ajouter un <span>vin</span></h1>
+  </div>
+
+  <div class="form-card" [formGroup]="form">
+
+    <!-- Nom du vin -->
+    <div class="form-group">
+      <label class="label">Nom du vin <span class="required">*</span></label>
+      <app-input
+        formControlName="name"
+        placeholder="Ex. Château Margaux"
+        [error]="form.get('name')?.invalid === true && form.get('name')?.touched === true" />
+    </div>
+
+    <!-- Appellation + Région -->
+    <div class="form-row">
+      <div class="form-group">
+        <label class="label">Appellation <span class="required">*</span></label>
+        <app-input
+          formControlName="appellation"
+          placeholder="Ex. Margaux"
+          [error]="form.get('appellation')?.invalid === true && form.get('appellation')?.touched === true" />
+      </div>
+      <div class="form-group">
+        <label class="label">Région</label>
+        <app-input
+          formControlName="region"
+          placeholder="Ex. Bordeaux" />
+      </div>
+    </div>
+
+    <!-- Millésime -->
+    <div class="form-group">
+      <label class="label">Millésime <span class="required">*</span></label>
+      <app-select
+        formControlName="vintage"
+        placeholder="Sélectionner…"
+        [options]="vintages" />
+    </div>
+
+    <!-- Type de vin -->
+    <div class="form-group">
+      <label class="label">Type de vin <span class="required">*</span></label>
+      <div class="type-pills">
+        @for (t of types; track t.value) {
+          <button
+            type="button"
+            class="type-pill"
+            [class]="'type-pill' + (form.value.type === t.value ? ' selected pill-' + t.value.toLowerCase() : '')"
+            (click)="selectType(t.value)">
+            {{ t.label }}
+          </button>
+        }
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="label">Région</label>
+        <app-select
+          formControlName="region"
+          placeholder="Sélectionner une région"
+          [options]="regions"
+          (change)="onRegionChange(form.value.region!)" />
+      </div>
+      @if (showCustomRegion()) {
+        <div class="form-group">
+          <label class="label">Région personnalisée</label>
+          <app-input
+            formControlName="customRegion"
+            placeholder="Ex. Priorat" />
+        </div>
+      }
+    </div>
+
+    <!-- Quantité + Prix -->
+    <div class="form-row">
+      <div class="form-group">
+        <label class="label">Quantité <span class="required">*</span></label>
+        <div class="qty-wrapper">
+          <button type="button" class="qty-btn" (click)="decrement()">−</button>
+          <span class="qty-value">{{ quantity() }}</span>
+          <button type="button" class="qty-btn" (click)="increment()">+</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="label">Prix / bouteille</label>
+        <div class="price-wrapper">
+          <app-input
+            formControlName="price"
+            type="number"
+            placeholder="45" />
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Actions -->
+    <div class="form-actions">
+      <app-button variant="secondary" (clicked)="onCancel()">Annuler</app-button>
+      <app-button variant="primary" (clicked)="onSubmit()">Ajouter le vin</app-button>
+    </div>
+
+  </div>
+</div>

@@ -1,1 +1,33 @@
-<p>wine-detail works!</p>
+<div class="wine-detail">
+
+  <div class="page-header">
+    <a class="back" routerLink="/bottles">← Ma cave</a>
+  </div>
+
+  @if (bottle()) {
+    <app-wine-hero-card [bottle]="bottle()!" />
+
+    <div class="peak-section">
+      <app-peak-window
+        [status]="vintageStatus().status"
+        [maturity]="vintageStatus().maturity"
+        [vintage]="bottle()!.vintage" />
+    </div>
+
+    @if (bottle()!.notes) {
+      <div class="tasting-section">
+        <div class="section-label">Note de dégustation</div>
+        <app-tasting-note [note]="bottle()!.notes!" />
+      </div>
+    }
+
+    <div class="actions">
+      <app-button variant="danger" size="sm" (clicked)="onDelete()">Supprimer</app-button>
+      <div class="actions-right">
+        <app-button variant="secondary" size="sm" (clicked)="onBack()">← Retour</app-button>
+        <app-button variant="primary" size="sm" (clicked)="onEdit()">Modifier</app-button>
+      </div>
+    </div>
+  }
+
+</div>

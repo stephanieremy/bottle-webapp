@@ -13,7 +13,7 @@ type Story = StoryObj<WineCardComponent>;
 const demoBottle = {
   id: '1',
   name: 'Château Margaux',
-  designation: 'Margaux 1er Grand Cru',
+  appellation: 'Margaux 1er Grand Cru',
   type: 'RED' as const,
   vintage: 2016,
   quantity: 6,
@@ -29,9 +29,9 @@ export const Overview: Story = {
       </div>
     `,
     props: {
-      rouge: { id: '1', name: 'Château Margaux', designation: 'Margaux 1er Grand Cru', type: 'RED', vintage: 2016, quantity: 6 },
-      blanc: { id: '2', name: 'Puligny-Montrachet', designation: '1er Cru Les Pucelles', type: 'WHITE', vintage: 2019, quantity: 3 },
-      champagne: { id: '3', name: 'Dom Pérignon', designation: 'Champagne Brut', type: 'CHAMPAGNE', vintage: 2018, quantity: 1 },
+      rouge: { id: '1', name: 'Château Margaux', appellation: 'Margaux 1er Grand Cru', type: 'RED', vintage: 2016, quantity: 6 },
+      blanc: { id: '2', name: 'Puligny-Montrachet', appellation: '1er Cru Les Pucelles', type: 'WHITE', vintage: 2019, quantity: 3 },
+      champagne: { id: '3', name: 'Dom Pérignon', appellation: 'Champagne Brut', type: 'CHAMPAGNE', vintage: 2018, quantity: 1 },
     },
   }),
 };
@@ -44,7 +44,7 @@ export const Rouge: Story = {
       </div>
     `,
     props: {
-      bottle: { id: '1', name: 'Château Margaux', designation: 'Margaux 1er Grand Cru', type: 'RED', vintage: 2016, quantity: 6 },
+      bottle: { id: '1', name: 'Château Margaux', appellation: 'Margaux 1er Grand Cru', type: 'RED', vintage: 2016, quantity: 6 },
     },
   }),
 };
@@ -57,7 +57,7 @@ export const Blanc: Story = {
       </div>
     `,
     props: {
-      bottle: { id: '2', name: 'Puligny-Montrachet', designation: '1er Cru Les Pucelles', type: 'WHITE', vintage: 2019, quantity: 3 },
+      bottle: { id: '2', name: 'Puligny-Montrachet', appellation: '1er Cru Les Pucelles', type: 'WHITE', vintage: 2019, quantity: 3 },
     },
   }),
 };
@@ -70,7 +70,7 @@ export const Champagne: Story = {
       </div>
     `,
     props: {
-      bottle: { id: '3', name: 'Dom Pérignon', designation: 'Champagne Brut', type: 'CHAMPAGNE', vintage: 2018, quantity: 1 },
+      bottle: { id: '3', name: 'Dom Pérignon', appellation: 'Champagne Brut', type: 'CHAMPAGNE', vintage: 2018, quantity: 1 },
     },
   }),
 };
@@ -83,7 +83,7 @@ export const Liquoreux: Story = {
       </div>
     `,
     props: {
-      bottle: { id: '4', name: "Sauternes d'Yquem", designation: '1er Cru Supérieur', type: 'MUTED', vintage: 2011, quantity: 1 },
+      bottle: { id: '4', name: "Sauternes d'Yquem", appellation: '1er Cru Supérieur', type: 'SWEET', vintage: 2011, quantity: 1 },
     },
   }),
 };

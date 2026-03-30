@@ -7,10 +7,10 @@ textarea {
   background: $color-bg;
   border: 1.5px solid $color-border;
   border-radius: $radius-md;
-  padding: 12px 16px;
+  padding: 0.75rem 1rem;
   font-family: $font-notes;
   font-style: italic;
-  font-size: 16px;
+  font-size: 1rem;
   color: $color-ink;
   line-height: 1.6;
   outline: none;
@@ -21,6 +21,6 @@ textarea {
   &.focused {
     background: $color-surface;
     border-color: $color-terracotta;
-    box-shadow: 0 0 0 3px rgba(196, 82, 42, 0.08);
+    box-shadow: 0 0 0 0.1875rem rgba(196, 82, 42, 0.08);
   }
 }

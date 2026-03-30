@@ -3,7 +3,7 @@
 .footer {
   background: $color-bg-alt;
   border-top: 0.5px solid $color-border;
-  padding: 20px 40px;
+  padding: 1.25rem 2.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -11,17 +11,17 @@
 
 .logo {
   font-family: $font-display;
-  font-size: 15px;
+  font-size: 0.9375rem;
   color: $color-ink-mid;
   font-style: italic;
 }
 
 .links {
   display: flex;
-  gap: 24px;
+  gap: 1.5rem;
 
   a {
-    font-size: 12px;
+    font-size: 0.75rem;
     color: $color-ink-light;
     font-family: $font-body;
     cursor: pointer;
@@ -32,7 +32,7 @@
 }
 
 .copy {
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: $color-ink-light;
   font-family: $font-body;
 }

@@ -19,7 +19,7 @@ export const Overview: Story = {
         <app-wine-type-badge type="PINK" />
         <app-wine-type-badge type="SPARKLING" />
         <app-wine-type-badge type="CHAMPAGNE" />
-        <app-wine-type-badge type="MUTED" />
+        <app-wine-type-badge type="SWEET" />
       </div>
     `,
   }),

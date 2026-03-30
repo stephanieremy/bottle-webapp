@@ -6,5 +6,7 @@
   (focus)="focused = true; onTouched()"
   (blur)="focused = false">
   <option value="" disabled [selected]="!value">{{ placeholder }}</option>
-  <option *ngFor="let opt of options" [value]="opt.value">{{ opt.label }}</option>
+  @for (opt of options; track opt.value) {
+    <option [value]="opt.value">{{ opt.label }}</option>
+  }
 </select>

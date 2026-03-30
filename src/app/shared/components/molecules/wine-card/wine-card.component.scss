@@ -4,7 +4,7 @@
   background: $color-surface;
   border: 0.5px solid $color-border;
   border-radius: $radius-lg;
-  padding: 18px;
+  padding: 1.125rem;
   display: flex;
   flex-direction: column;
   aspect-ratio: 1 / 1;
@@ -13,7 +13,7 @@
 
   &:hover {
     border-color: $color-terracotta;
-    box-shadow: 0 0 0 3px rgba(196, 82, 42, 0.08);
+    box-shadow: 0 0 0 0.1875rem rgba(196, 82, 42, 0.08);
   }
 }
 
@@ -21,18 +21,18 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 10px;
+  margin-bottom: 0.625rem;
 }
 
 .vintage {
   font-family: $font-display;
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: $color-ink-light;
 }
 
 .wine-name {
   font-family: $font-display;
-  font-size: 17px;
+  font-size: 1.0625rem;
   font-weight: 700;
   color: $color-ink;
   line-height: 1.2;
@@ -40,9 +40,9 @@
 }
 
 .appellation {
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: $color-ink-light;
-  margin-top: 5px;
+  margin-top: 0.3125rem;
 }
 
 .card-bottom {
@@ -50,12 +50,12 @@
   justify-content: space-between;
   align-items: center;
   margin-top: auto;
-  padding-top: 10px;
+  padding-top: 0.625rem;
   border-top: 0.5px solid $color-bg-alt;
 }
 
 .qty {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: $color-ink-light;
   font-family: $font-body;
 }

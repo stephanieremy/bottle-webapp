@@ -3,22 +3,32 @@
     "interfaces": [
         {
             "name": "Bottle",
-            "id": "interface-Bottle-2fec1211dee3e2703c64699363402985fda70ebc9f0bd059bb4170af1d3148dcd4b1a5d7b28ddbf7002f793858d77620ac753a59f8c539d2079c5e0cf465377c",
+            "id": "interface-Bottle-ba934e0d69d312a81301bb183a51118cf5733f459e77a457fad580eef81a5593e7d185e8045b47f8d5ddb77762bc629c0ef88021e476ed1f17829e78f2e452ae",
             "file": "src/app/shared/models/bottle.model.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "export type WineType = 'RED' | 'WHITE' | 'PINK' | 'SPARKLING' | 'CHAMPAGNE' | 'MUTED';\n\nexport interface Bottle {\n  id: string;\n  name: string;\n  designation: string;\n  vintage: number;\n  type: WineType;\n  quantity: number;\n  notes?: string;\n}\n",
+            "sourceCode": "import {WineRegion} from './wine-region.model';\n\nexport type WineType = 'RED' | 'WHITE' | 'PINK' | 'SPARKLING' | 'CHAMPAGNE' | 'SWEET';\n\nexport interface Bottle {\n  id: string;\n  name: string;\n  appellation: string;\n  region?:  WineRegion | string;\n  vintage: number;\n  type: WineType;\n  quantity: number;\n  notes?: string;\n  price?: number;\n  score?: number;\n  creationDate?: Date;\n}\n",
             "properties": [
                 {
-                    "name": "designation",
+                    "name": "appellation",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "string",
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 6
+                    "line": 8
+                },
+                {
+                    "name": "creationDate",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Date",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 16
                 },
                 {
                     "name": "id",
@@ -28,7 +38,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 4
+                    "line": 6
                 },
                 {
                     "name": "name",
@@ -38,7 +48,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 5
+                    "line": 7
                 },
                 {
                     "name": "notes",
@@ -48,7 +58,17 @@
                     "indexKey": "",
                     "optional": true,
                     "description": "",
-                    "line": 10
+                    "line": 13
+                },
+                {
+                    "name": "price",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 14
                 },
                 {
                     "name": "quantity",
@@ -58,7 +78,27 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
+                    "line": 12
+                },
+                {
+                    "name": "region",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "WineRegion | string",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
                     "line": 9
+                },
+                {
+                    "name": "score",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 15
                 },
                 {
                     "name": "type",
@@ -68,7 +108,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 8
+                    "line": 11
                 },
                 {
                     "name": "vintage",
@@ -78,7 +118,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 7
+                    "line": 10
                 }
             ],
             "indexSignatures": [],
@@ -88,12 +128,12 @@
         },
         {
             "name": "SelectOption",
-            "id": "interface-SelectOption-b31022ca87bb0c922d0682f71c796f384eb424473e00655c1fc66dd65b8f48e6d1f35cff7df8d792c1316ca9f5a5909e73b846d88ee67d7661276d13b5c0c4d0",
+            "id": "interface-SelectOption-9be8f2d9d90b5e1e8bce85078ae9c1a27f414937e0572742f468eaab88d4f16e4ec24020de675f9f8890e9933c5da6710b614deecee729d5491804972c3f8ed6",
             "file": "src/app/shared/components/atoms/select/select.component.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import { Component, Input, forwardRef } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';\nimport { CommonModule } from '@angular/common';\n\nexport interface SelectOption {\n  value: string;\n  label: string;\n}\n\n@Component({\n  selector: 'app-select',\n  standalone: true,\n  imports: [CommonModule, ReactiveFormsModule],\n  templateUrl: './select.component.html',\n  styleUrl: './select.component.scss',\n  providers: [{\n    provide: NG_VALUE_ACCESSOR,\n    useExisting: forwardRef(() => SelectComponent),\n    multi: true\n  }]\n})\nexport class SelectComponent implements ControlValueAccessor {\n  @Input() placeholder = 'Sélectionner…';\n  @Input() options: SelectOption[] = [];\n  @Input() disabled = false;\n\n  value = '';\n  focused = false;\n\n  onChange = (_: any) => {};\n  onTouched = () => {};\n\n  writeValue(val: string) { this.value = val ?? ''; }\n  registerOnChange(fn: any) { this.onChange = fn; }\n  registerOnTouched(fn: any) { this.onTouched = fn; }\n  setDisabledState(disabled: boolean) { this.disabled = disabled; }\n\n  onSelect(e: Event) {\n    this.value = (e.target as HTMLSelectElement).value;\n    this.onChange(this.value);\n  }\n}\n",
+            "sourceCode": "import { Component, Input, forwardRef } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';\nimport {CommonModule} from '@angular/common';\n\nexport interface SelectOption {\n  value: string;\n  label: string;\n}\n\n@Component({\n  selector: 'app-select',\n  standalone: true,\n  imports: [CommonModule, ReactiveFormsModule],\n  templateUrl: './select.component.html',\n  styleUrl: './select.component.scss',\n  providers: [{\n    provide: NG_VALUE_ACCESSOR,\n    useExisting: forwardRef(() => SelectComponent),\n    multi: true\n  }]\n})\nexport class SelectComponent implements ControlValueAccessor {\n  @Input() placeholder = 'Sélectionner…';\n  @Input() options: SelectOption[] = [];\n  @Input() disabled = false;\n\n  value = '';\n  focused = false;\n\n  onChange = (_: any) => {};\n  onTouched = () => {};\n\n  writeValue(val: string) { this.value = val ?? ''; }\n  registerOnChange(fn: any) { this.onChange = fn; }\n  registerOnTouched(fn: any) { this.onTouched = fn; }\n  setDisabledState(disabled: boolean) { this.disabled = disabled; }\n\n  onSelect(e: Event) {\n    this.value = (e.target as HTMLSelectElement).value;\n    this.onChange(this.value);\n  }\n}\n",
             "properties": [
                 {
                     "name": "label",
@@ -139,6 +179,86 @@
                     "optional": false,
                     "description": "",
                     "line": 2
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 172,
+            "methods": [],
+            "extends": []
+        },
+        {
+            "name": "VintageInfo",
+            "id": "interface-VintageInfo-12b08668d2f4d3c790ad8fff452a84a6073050a69b566ce636b7b2a777ed63bb5605d8051131090cbf3128c24c74bf00954f14e32e0405b132415810013be15a",
+            "file": "src/app/core/services/vintage-maturity.service.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import { Injectable, inject } from '@angular/core';\nimport { HttpClient } from '@angular/common/http';\nimport { Observable, map } from 'rxjs';\nimport { WineRegion } from '../../shared/models/wine-region.model';\n\nexport type VintageMaturity = 'T' | 'E' | 'R' | 'I' | 'C' | 'NT';\n\nexport interface VintageInfo {\n  score: number;\n  maturity: VintageMaturity;\n}\n\nexport type DrinkingStatus = 'not-ready' | 'ready' | 'past-peak' | 'unknown';\n\nexport interface VintageStatus {\n  status: DrinkingStatus;\n  score?: number;\n  maturity?: VintageMaturity;\n}\n\n@Injectable({ providedIn: 'root' })\nexport class VintageChartService {\n  private http = inject(HttpClient);\n  private chart: Record<string, Record<string, VintageInfo>> = {};\n\n  loadChart(): Observable<void> {\n    return this.http.get<Record<string, Record<string, VintageInfo>>>('assets/vintage-chart.json')\n      .pipe(map(data => { this.chart = data; }));\n  }\n\n  getStatus(region: WineRegion | string, vintage: number): VintageStatus {\n    const regionData = this.chart[region];\n    if (!regionData) return { status: 'unknown' };\n\n    const info = regionData[String(vintage)];\n    if (!info) return { status: 'unknown' };\n\n    return {\n      score: info.score,\n      maturity: info.maturity,\n      status: this.maturityToStatus(info.maturity),\n    };\n  }\n\n  private maturityToStatus(maturity: VintageMaturity): DrinkingStatus {\n    switch (maturity) {\n      case 'T': return 'not-ready';\n      case 'E':\n      case 'R': return 'ready';\n      case 'C': return 'past-peak';\n      default:  return 'unknown';\n    }\n  }\n}\n",
+            "properties": [
+                {
+                    "name": "maturity",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "VintageMaturity",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 10
+                },
+                {
+                    "name": "score",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 9
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 172,
+            "methods": [],
+            "extends": []
+        },
+        {
+            "name": "VintageStatus",
+            "id": "interface-VintageStatus-12b08668d2f4d3c790ad8fff452a84a6073050a69b566ce636b7b2a777ed63bb5605d8051131090cbf3128c24c74bf00954f14e32e0405b132415810013be15a",
+            "file": "src/app/core/services/vintage-maturity.service.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "import { Injectable, inject } from '@angular/core';\nimport { HttpClient } from '@angular/common/http';\nimport { Observable, map } from 'rxjs';\nimport { WineRegion } from '../../shared/models/wine-region.model';\n\nexport type VintageMaturity = 'T' | 'E' | 'R' | 'I' | 'C' | 'NT';\n\nexport interface VintageInfo {\n  score: number;\n  maturity: VintageMaturity;\n}\n\nexport type DrinkingStatus = 'not-ready' | 'ready' | 'past-peak' | 'unknown';\n\nexport interface VintageStatus {\n  status: DrinkingStatus;\n  score?: number;\n  maturity?: VintageMaturity;\n}\n\n@Injectable({ providedIn: 'root' })\nexport class VintageChartService {\n  private http = inject(HttpClient);\n  private chart: Record<string, Record<string, VintageInfo>> = {};\n\n  loadChart(): Observable<void> {\n    return this.http.get<Record<string, Record<string, VintageInfo>>>('assets/vintage-chart.json')\n      .pipe(map(data => { this.chart = data; }));\n  }\n\n  getStatus(region: WineRegion | string, vintage: number): VintageStatus {\n    const regionData = this.chart[region];\n    if (!regionData) return { status: 'unknown' };\n\n    const info = regionData[String(vintage)];\n    if (!info) return { status: 'unknown' };\n\n    return {\n      score: info.score,\n      maturity: info.maturity,\n      status: this.maturityToStatus(info.maturity),\n    };\n  }\n\n  private maturityToStatus(maturity: VintageMaturity): DrinkingStatus {\n    switch (maturity) {\n      case 'T': return 'not-ready';\n      case 'E':\n      case 'R': return 'ready';\n      case 'C': return 'past-peak';\n      default:  return 'unknown';\n    }\n  }\n}\n",
+            "properties": [
+                {
+                    "name": "maturity",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "VintageMaturity",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 18
+                },
+                {
+                    "name": "score",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "indexKey": "",
+                    "optional": true,
+                    "description": "",
+                    "line": 17
+                },
+                {
+                    "name": "status",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "DrinkingStatus",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 16
                 }
             ],
             "indexSignatures": [],
@@ -334,6 +454,146 @@
             "sourceCode": "import { Injectable, inject } from '@angular/core';\nimport { HttpClient } from '@angular/common/http';\nimport { Observable } from 'rxjs';\nimport { Bottle } from '../../shared/models/bottle.model';\n\n@Injectable({ providedIn: 'root' })\nexport class BottleService {\n  private http = inject(HttpClient);\n\n  getAll(): Observable<Bottle[]> {\n    return this.http.get<Bottle[]>('/bottle');\n  }\n\n  getById(id: string): Observable<Bottle> {\n    return this.http.get<Bottle>(`/bottle/${id}`);\n  }\n\n  create(bottle: Omit<Bottle, 'id'>): Observable<Bottle> {\n    return this.http.post<Bottle>('/bottle', bottle);\n  }\n\n  update(id: string, bottle: Partial<Bottle>): Observable<Bottle> {\n    return this.http.put<Bottle>(`/bottle/${id}`, bottle);\n  }\n\n  delete(id: string): Observable<void> {\n    return this.http.delete<void>(`/bottle/${id}`);\n  }\n}\n",
             "extends": [],
             "type": "injectable"
+        },
+        {
+            "name": "VintageChartService",
+            "id": "injectable-VintageChartService-12b08668d2f4d3c790ad8fff452a84a6073050a69b566ce636b7b2a777ed63bb5605d8051131090cbf3128c24c74bf00954f14e32e0405b132415810013be15a",
+            "file": "src/app/core/services/vintage-maturity.service.ts",
+            "properties": [
+                {
+                    "name": "chart",
+                    "defaultValue": "{}",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Record<string | Record<string, VintageInfo>>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 24,
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "http",
+                    "defaultValue": "inject(HttpClient)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 23,
+                    "modifierKind": [
+                        123
+                    ]
+                }
+            ],
+            "methods": [
+                {
+                    "name": "getStatus",
+                    "args": [
+                        {
+                            "name": "region",
+                            "type": "WineRegion | string",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "vintage",
+                            "type": "number",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "VintageStatus",
+                    "typeParameters": [],
+                    "line": 31,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "region",
+                            "type": "WineRegion | string",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "vintage",
+                            "type": "number",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "loadChart",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "Observable<void>",
+                    "typeParameters": [],
+                    "line": 26,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "maturityToStatus",
+                    "args": [
+                        {
+                            "name": "maturity",
+                            "type": "VintageMaturity",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "DrinkingStatus",
+                    "typeParameters": [],
+                    "line": 45,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "maturity",
+                            "type": "VintageMaturity",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "description": "",
+            "rawdescription": "\n",
+            "sourceCode": "import { Injectable, inject } from '@angular/core';\nimport { HttpClient } from '@angular/common/http';\nimport { Observable, map } from 'rxjs';\nimport { WineRegion } from '../../shared/models/wine-region.model';\n\nexport type VintageMaturity = 'T' | 'E' | 'R' | 'I' | 'C' | 'NT';\n\nexport interface VintageInfo {\n  score: number;\n  maturity: VintageMaturity;\n}\n\nexport type DrinkingStatus = 'not-ready' | 'ready' | 'past-peak' | 'unknown';\n\nexport interface VintageStatus {\n  status: DrinkingStatus;\n  score?: number;\n  maturity?: VintageMaturity;\n}\n\n@Injectable({ providedIn: 'root' })\nexport class VintageChartService {\n  private http = inject(HttpClient);\n  private chart: Record<string, Record<string, VintageInfo>> = {};\n\n  loadChart(): Observable<void> {\n    return this.http.get<Record<string, Record<string, VintageInfo>>>('assets/vintage-chart.json')\n      .pipe(map(data => { this.chart = data; }));\n  }\n\n  getStatus(region: WineRegion | string, vintage: number): VintageStatus {\n    const regionData = this.chart[region];\n    if (!regionData) return { status: 'unknown' };\n\n    const info = regionData[String(vintage)];\n    if (!info) return { status: 'unknown' };\n\n    return {\n      score: info.score,\n      maturity: info.maturity,\n      status: this.maturityToStatus(info.maturity),\n    };\n  }\n\n  private maturityToStatus(maturity: VintageMaturity): DrinkingStatus {\n    switch (maturity) {\n      case 'T': return 'not-ready';\n      case 'E':\n      case 'R': return 'ready';\n      case 'C': return 'past-peak';\n      default:  return 'unknown';\n    }\n  }\n}\n",
+            "extends": [],
+            "type": "injectable"
         }
     ],
     "guards": [],
@@ -343,7 +603,7 @@
     "components": [
         {
             "name": "AppComponent",
-            "id": "component-AppComponent-b9a00859d8f15790e6157de41ed246c00c0184bbb2673a04e6bf806a41618133325e292a11bea1d57f8a2d25f9d289a1864a8551cd3d3e337776dbd8152de47f",
+            "id": "component-AppComponent-1bb87dc3a46b152c9d981547d9af04d5a4dc704f630f0a6ab9d0c2ae8c631cbd067cfb9c6d2a011499b096bdb218ff6f06b2a72ee1f862b237244b6c2cb887b0",
             "file": "src/app/app.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -360,40 +620,83 @@
             "hostDirectives": [],
             "inputsClass": [],
             "outputsClass": [],
-            "propertiesClass": [
-                {
-                    "name": "title",
-                    "defaultValue": "'vinotheque-webapp'",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "indexKey": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 10
-                }
-            ],
+            "propertiesClass": [],
             "methodsClass": [],
             "deprecated": false,
             "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
-            "standalone": false,
-            "imports": [],
+            "standalone": true,
+            "imports": [
+                {
+                    "name": "RouterModule",
+                    "type": "module"
+                }
+            ],
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-root',\n  imports: [],\n  templateUrl: './app.component.html',\n  styleUrl: './app.component.scss'\n})\nexport class AppComponent {\n  title = 'vinotheque-webapp';\n}\n",
-            "styleUrl": "./app.component.scss",
+            "sourceCode": "import { Component } from '@angular/core';\nimport { RouterModule } from '@angular/router';\n\n@Component({\n  selector: 'app-root',\n  standalone: true,\n  imports: [RouterModule],\n  templateUrl: './app.component.html',\n})\nexport class AppComponent {}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
             "extends": [],
-            "templateData": "<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->\n<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->\n<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->\n<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * -->\n<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->\n<!-- * * * * * * * * * Delete the template below * * * * * * * * * -->\n<!-- * * * * * * * to get started with your project! * * * * * * * -->\n<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->\n\n<style>\n  :host {\n    --bright-blue: oklch(51.01% 0.274 263.83);\n    --electric-violet: oklch(53.18% 0.28 296.97);\n    --french-violet: oklch(47.66% 0.246 305.88);\n    --vivid-pink: oklch(69.02% 0.277 332.77);\n    --hot-red: oklch(61.42% 0.238 15.34);\n    --orange-red: oklch(63.32% 0.24 31.68);\n\n    --gray-900: oklch(19.37% 0.006 300.98);\n    --gray-700: oklch(36.98% 0.014 302.71);\n    --gray-400: oklch(70.9% 0.015 304.04);\n\n    --red-to-pink-to-purple-vertical-gradient: linear-gradient(\n      180deg,\n      var(--orange-red) 0%,\n      var(--vivid-pink) 50%,\n      var(--electric-violet) 100%\n    );\n\n    --red-to-pink-to-purple-horizontal-gradient: linear-gradient(\n      90deg,\n      var(--orange-red) 0%,\n      var(--vivid-pink) 50%,\n      var(--electric-violet) 100%\n    );\n\n    --pill-accent: var(--bright-blue);\n\n    font-family: \"Inter\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto,\n      Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\",\n      \"Segoe UI Symbol\";\n    box-sizing: border-box;\n    -webkit-font-smoothing: antialiased;\n    -moz-osx-font-smoothing: grayscale;\n  }\n\n  h1 {\n    font-size: 3.125rem;\n    color: var(--gray-900);\n    font-weight: 500;\n    line-height: 100%;\n    letter-spacing: -0.125rem;\n    margin: 0;\n    font-family: \"Inter Tight\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto,\n      Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\",\n      \"Segoe UI Symbol\";\n  }\n\n  p {\n    margin: 0;\n    color: var(--gray-700);\n  }\n\n  main {\n    width: 100%;\n    min-height: 100%;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    padding: 1rem;\n    box-sizing: inherit;\n    position: relative;\n  }\n\n  .angular-logo {\n    max-width: 9.2rem;\n  }\n\n  .content {\n    display: flex;\n    justify-content: space-around;\n    width: 100%;\n    max-width: 700px;\n    margin-bottom: 3rem;\n  }\n\n  .content h1 {\n    margin-top: 1.75rem;\n  }\n\n  .content p {\n    margin-top: 1.5rem;\n  }\n\n  .divider {\n    width: 1px;\n    background: var(--red-to-pink-to-purple-vertical-gradient);\n    margin-inline: 0.5rem;\n  }\n\n  .pill-group {\n    display: flex;\n    flex-direction: column;\n    align-items: start;\n    flex-wrap: wrap;\n    gap: 1.25rem;\n  }\n\n  .pill {\n    display: flex;\n    align-items: center;\n    --pill-accent: var(--bright-blue);\n    background: color-mix(in srgb, var(--pill-accent) 5%, transparent);\n    color: var(--pill-accent);\n    padding-inline: 0.75rem;\n    padding-block: 0.375rem;\n    border-radius: 2.75rem;\n    border: 0;\n    transition: background 0.3s ease;\n    font-family: var(--inter-font);\n    font-size: 0.875rem;\n    font-style: normal;\n    font-weight: 500;\n    line-height: 1.4rem;\n    letter-spacing: -0.00875rem;\n    text-decoration: none;\n  }\n\n  .pill:hover {\n    background: color-mix(in srgb, var(--pill-accent) 15%, transparent);\n  }\n\n  .pill-group .pill:nth-child(6n + 1) {\n    --pill-accent: var(--bright-blue);\n  }\n  .pill-group .pill:nth-child(6n + 2) {\n    --pill-accent: var(--french-violet);\n  }\n  .pill-group .pill:nth-child(6n + 3),\n  .pill-group .pill:nth-child(6n + 4),\n  .pill-group .pill:nth-child(6n + 5) {\n    --pill-accent: var(--hot-red);\n  }\n\n  .pill-group svg {\n    margin-inline-start: 0.25rem;\n  }\n\n  .social-links {\n    display: flex;\n    align-items: center;\n    gap: 0.73rem;\n    margin-top: 1.5rem;\n  }\n\n  .social-links path {\n    transition: fill 0.3s ease;\n    fill: var(--gray-400);\n  }\n\n  .social-links a:hover svg path {\n    fill: var(--gray-900);\n  }\n\n  @media screen and (max-width: 650px) {\n    .content {\n      flex-direction: column;\n      width: max-content;\n    }\n\n    .divider {\n      height: 1px;\n      width: 100%;\n      background: var(--red-to-pink-to-purple-horizontal-gradient);\n      margin-block: 1.5rem;\n    }\n  }\n</style>\n\n<main class=\"main\">\n  <div class=\"content\">\n    <div class=\"left-side\">\n      <svg\n        xmlns=\"http://www.w3.org/2000/svg\"\n        viewBox=\"0 0 982 239\"\n        fill=\"none\"\n        class=\"angular-logo\"\n      >\n        <g clip-path=\"url(#a)\">\n          <path\n            fill=\"url(#b)\"\n            d=\"M388.676 191.625h30.849L363.31 31.828h-35.758l-56.215 159.797h30.848l13.174-39.356h60.061l13.256 39.356Zm-65.461-62.675 21.602-64.311h1.227l21.602 64.311h-44.431Zm126.831-7.527v70.202h-28.23V71.839h27.002v20.374h1.392c2.782-6.71 7.2-12.028 13.255-15.956 6.056-3.927 13.584-5.89 22.503-5.89 8.264 0 15.465 1.8 21.684 5.318 6.137 3.518 10.964 8.673 14.319 15.382 3.437 6.71 5.074 14.81 4.992 24.383v76.175h-28.23v-71.92c0-8.019-2.046-14.237-6.219-18.819-4.173-4.5-9.819-6.791-17.102-6.791-4.91 0-9.328 1.063-13.174 3.272-3.846 2.128-6.792 5.237-9.001 9.328-2.046 4.009-3.191 8.918-3.191 14.728ZM589.233 239c-10.147 0-18.82-1.391-26.103-4.091-7.282-2.7-13.092-6.382-17.511-10.964-4.418-4.582-7.528-9.655-9.164-15.219l25.448-6.136c1.145 2.372 2.782 4.663 4.991 6.954 2.209 2.291 5.155 4.255 8.837 5.81 3.683 1.554 8.428 2.291 14.074 2.291 8.019 0 14.647-1.964 19.884-5.81 5.237-3.845 7.856-10.227 7.856-19.064v-22.665h-1.391c-1.473 2.946-3.601 5.892-6.383 9.001-2.782 3.109-6.464 5.645-10.965 7.691-4.582 2.046-10.228 3.109-17.101 3.109-9.165 0-17.511-2.209-25.039-6.545-7.446-4.337-13.42-10.883-17.757-19.474-4.418-8.673-6.628-19.473-6.628-32.565 0-13.091 2.21-24.301 6.628-33.383 4.419-9.082 10.311-15.955 17.839-20.7 7.528-4.746 15.874-7.037 25.039-7.037 7.037 0 12.846 1.145 17.347 3.518 4.582 2.373 8.182 5.236 10.883 8.51 2.7 3.272 4.746 6.382 6.137 9.327h1.554v-19.8h27.821v121.749c0 10.228-2.454 18.737-7.364 25.447-4.91 6.709-11.538 11.7-20.048 15.055-8.509 3.355-18.165 4.991-28.884 4.991Zm.245-71.266c5.974 0 11.047-1.473 15.302-4.337 4.173-2.945 7.446-7.118 9.573-12.519 2.21-5.482 3.274-12.027 3.274-19.637 0-7.609-1.064-14.155-3.274-19.8-2.127-5.646-5.318-10.064-9.491-13.255-4.174-3.11-9.329-4.746-15.384-4.746s-11.537 1.636-15.792 4.91c-4.173 3.272-7.365 7.772-9.492 13.418-2.128 5.727-3.191 12.191-3.191 19.392 0 7.2 1.063 13.745 3.273 19.228 2.127 5.482 5.318 9.736 9.573 12.764 4.174 3.027 9.41 4.582 15.629 4.582Zm141.56-26.51V71.839h28.23v119.786h-27.412v-21.273h-1.227c-2.7 6.709-7.119 12.191-13.338 16.446-6.137 4.255-13.747 6.382-22.748 6.382-7.855 0-14.81-1.718-20.783-5.237-5.974-3.518-10.72-8.591-14.075-15.382-3.355-6.709-5.073-14.891-5.073-24.464V71.839h28.312v71.921c0 7.609 2.046 13.664 6.219 18.083 4.173 4.5 9.655 6.709 16.365 6.709 4.173 0 8.183-.982 12.111-3.028 3.927-2.045 7.118-5.072 9.655-9.082 2.537-4.091 3.764-9.164 3.764-15.218Zm65.707-109.395v159.796h-28.23V31.828h28.23Zm44.841 162.169c-7.61 0-14.402-1.391-20.457-4.091-6.055-2.7-10.883-6.791-14.32-12.109-3.518-5.319-5.237-11.946-5.237-19.801 0-6.791 1.228-12.355 3.765-16.773 2.536-4.419 5.891-7.937 10.228-10.637 4.337-2.618 9.164-4.664 14.647-6.055 5.4-1.391 11.046-2.373 16.856-3.027 7.037-.737 12.683-1.391 17.102-1.964 4.337-.573 7.528-1.555 9.574-2.782 1.963-1.309 3.027-3.273 3.027-5.973v-.491c0-5.891-1.718-10.391-5.237-13.664-3.518-3.191-8.51-4.828-15.056-4.828-6.955 0-12.356 1.473-16.447 4.5-4.009 3.028-6.71 6.546-8.183 10.719l-26.348-3.764c2.046-7.282 5.483-13.336 10.31-18.328 4.746-4.909 10.638-8.59 17.511-11.045 6.955-2.455 14.565-3.682 22.912-3.682 5.809 0 11.537.654 17.265 2.045s10.965 3.6 15.711 6.71c4.746 3.109 8.51 7.282 11.455 12.6 2.864 5.318 4.337 11.946 4.337 19.883v80.184h-27.166v-16.446h-.9c-1.719 3.355-4.092 6.464-7.201 9.328-3.109 2.864-6.955 5.237-11.619 6.955-4.828 1.718-10.229 2.536-16.529 2.536Zm7.364-20.701c5.646 0 10.556-1.145 14.729-3.354 4.173-2.291 7.364-5.237 9.655-9.001 2.292-3.763 3.355-7.854 3.355-12.273v-14.155c-.9.737-2.373 1.391-4.5 2.046-2.128.654-4.419 1.145-7.037 1.636-2.619.491-5.155.9-7.692 1.227-2.537.328-4.746.655-6.628.901-4.173.572-8.019 1.472-11.292 2.781-3.355 1.31-5.973 3.11-7.855 5.401-1.964 2.291-2.864 5.318-2.864 8.918 0 5.237 1.882 9.164 5.728 11.782 3.682 2.782 8.51 4.091 14.401 4.091Zm64.643 18.328V71.839h27.412v19.965h1.227c2.21-6.955 5.974-12.274 11.292-16.038 5.319-3.763 11.456-5.645 18.329-5.645 1.555 0 3.355.082 5.237.163 1.964.164 3.601.328 4.91.573v25.938c-1.227-.41-3.109-.819-5.646-1.146a58.814 58.814 0 0 0-7.446-.49c-5.155 0-9.738 1.145-13.829 3.354-4.091 2.209-7.282 5.236-9.655 9.164-2.373 3.927-3.519 8.427-3.519 13.5v70.448h-28.312ZM222.077 39.192l-8.019 125.923L137.387 0l84.69 39.192Zm-53.105 162.825-57.933 33.056-57.934-33.056 11.783-28.556h92.301l11.783 28.556ZM111.039 62.675l30.357 73.803H80.681l30.358-73.803ZM7.937 165.115 0 39.192 84.69 0 7.937 165.115Z\"\n          />\n          <path\n            fill=\"url(#c)\"\n            d=\"M388.676 191.625h30.849L363.31 31.828h-35.758l-56.215 159.797h30.848l13.174-39.356h60.061l13.256 39.356Zm-65.461-62.675 21.602-64.311h1.227l21.602 64.311h-44.431Zm126.831-7.527v70.202h-28.23V71.839h27.002v20.374h1.392c2.782-6.71 7.2-12.028 13.255-15.956 6.056-3.927 13.584-5.89 22.503-5.89 8.264 0 15.465 1.8 21.684 5.318 6.137 3.518 10.964 8.673 14.319 15.382 3.437 6.71 5.074 14.81 4.992 24.383v76.175h-28.23v-71.92c0-8.019-2.046-14.237-6.219-18.819-4.173-4.5-9.819-6.791-17.102-6.791-4.91 0-9.328 1.063-13.174 3.272-3.846 2.128-6.792 5.237-9.001 9.328-2.046 4.009-3.191 8.918-3.191 14.728ZM589.233 239c-10.147 0-18.82-1.391-26.103-4.091-7.282-2.7-13.092-6.382-17.511-10.964-4.418-4.582-7.528-9.655-9.164-15.219l25.448-6.136c1.145 2.372 2.782 4.663 4.991 6.954 2.209 2.291 5.155 4.255 8.837 5.81 3.683 1.554 8.428 2.291 14.074 2.291 8.019 0 14.647-1.964 19.884-5.81 5.237-3.845 7.856-10.227 7.856-19.064v-22.665h-1.391c-1.473 2.946-3.601 5.892-6.383 9.001-2.782 3.109-6.464 5.645-10.965 7.691-4.582 2.046-10.228 3.109-17.101 3.109-9.165 0-17.511-2.209-25.039-6.545-7.446-4.337-13.42-10.883-17.757-19.474-4.418-8.673-6.628-19.473-6.628-32.565 0-13.091 2.21-24.301 6.628-33.383 4.419-9.082 10.311-15.955 17.839-20.7 7.528-4.746 15.874-7.037 25.039-7.037 7.037 0 12.846 1.145 17.347 3.518 4.582 2.373 8.182 5.236 10.883 8.51 2.7 3.272 4.746 6.382 6.137 9.327h1.554v-19.8h27.821v121.749c0 10.228-2.454 18.737-7.364 25.447-4.91 6.709-11.538 11.7-20.048 15.055-8.509 3.355-18.165 4.991-28.884 4.991Zm.245-71.266c5.974 0 11.047-1.473 15.302-4.337 4.173-2.945 7.446-7.118 9.573-12.519 2.21-5.482 3.274-12.027 3.274-19.637 0-7.609-1.064-14.155-3.274-19.8-2.127-5.646-5.318-10.064-9.491-13.255-4.174-3.11-9.329-4.746-15.384-4.746s-11.537 1.636-15.792 4.91c-4.173 3.272-7.365 7.772-9.492 13.418-2.128 5.727-3.191 12.191-3.191 19.392 0 7.2 1.063 13.745 3.273 19.228 2.127 5.482 5.318 9.736 9.573 12.764 4.174 3.027 9.41 4.582 15.629 4.582Zm141.56-26.51V71.839h28.23v119.786h-27.412v-21.273h-1.227c-2.7 6.709-7.119 12.191-13.338 16.446-6.137 4.255-13.747 6.382-22.748 6.382-7.855 0-14.81-1.718-20.783-5.237-5.974-3.518-10.72-8.591-14.075-15.382-3.355-6.709-5.073-14.891-5.073-24.464V71.839h28.312v71.921c0 7.609 2.046 13.664 6.219 18.083 4.173 4.5 9.655 6.709 16.365 6.709 4.173 0 8.183-.982 12.111-3.028 3.927-2.045 7.118-5.072 9.655-9.082 2.537-4.091 3.764-9.164 3.764-15.218Zm65.707-109.395v159.796h-28.23V31.828h28.23Zm44.841 162.169c-7.61 0-14.402-1.391-20.457-4.091-6.055-2.7-10.883-6.791-14.32-12.109-3.518-5.319-5.237-11.946-5.237-19.801 0-6.791 1.228-12.355 3.765-16.773 2.536-4.419 5.891-7.937 10.228-10.637 4.337-2.618 9.164-4.664 14.647-6.055 5.4-1.391 11.046-2.373 16.856-3.027 7.037-.737 12.683-1.391 17.102-1.964 4.337-.573 7.528-1.555 9.574-2.782 1.963-1.309 3.027-3.273 3.027-5.973v-.491c0-5.891-1.718-10.391-5.237-13.664-3.518-3.191-8.51-4.828-15.056-4.828-6.955 0-12.356 1.473-16.447 4.5-4.009 3.028-6.71 6.546-8.183 10.719l-26.348-3.764c2.046-7.282 5.483-13.336 10.31-18.328 4.746-4.909 10.638-8.59 17.511-11.045 6.955-2.455 14.565-3.682 22.912-3.682 5.809 0 11.537.654 17.265 2.045s10.965 3.6 15.711 6.71c4.746 3.109 8.51 7.282 11.455 12.6 2.864 5.318 4.337 11.946 4.337 19.883v80.184h-27.166v-16.446h-.9c-1.719 3.355-4.092 6.464-7.201 9.328-3.109 2.864-6.955 5.237-11.619 6.955-4.828 1.718-10.229 2.536-16.529 2.536Zm7.364-20.701c5.646 0 10.556-1.145 14.729-3.354 4.173-2.291 7.364-5.237 9.655-9.001 2.292-3.763 3.355-7.854 3.355-12.273v-14.155c-.9.737-2.373 1.391-4.5 2.046-2.128.654-4.419 1.145-7.037 1.636-2.619.491-5.155.9-7.692 1.227-2.537.328-4.746.655-6.628.901-4.173.572-8.019 1.472-11.292 2.781-3.355 1.31-5.973 3.11-7.855 5.401-1.964 2.291-2.864 5.318-2.864 8.918 0 5.237 1.882 9.164 5.728 11.782 3.682 2.782 8.51 4.091 14.401 4.091Zm64.643 18.328V71.839h27.412v19.965h1.227c2.21-6.955 5.974-12.274 11.292-16.038 5.319-3.763 11.456-5.645 18.329-5.645 1.555 0 3.355.082 5.237.163 1.964.164 3.601.328 4.91.573v25.938c-1.227-.41-3.109-.819-5.646-1.146a58.814 58.814 0 0 0-7.446-.49c-5.155 0-9.738 1.145-13.829 3.354-4.091 2.209-7.282 5.236-9.655 9.164-2.373 3.927-3.519 8.427-3.519 13.5v70.448h-28.312ZM222.077 39.192l-8.019 125.923L137.387 0l84.69 39.192Zm-53.105 162.825-57.933 33.056-57.934-33.056 11.783-28.556h92.301l11.783 28.556ZM111.039 62.675l30.357 73.803H80.681l30.358-73.803ZM7.937 165.115 0 39.192 84.69 0 7.937 165.115Z\"\n          />\n        </g>\n        <defs>\n          <radialGradient\n            id=\"c\"\n            cx=\"0\"\n            cy=\"0\"\n            r=\"1\"\n            gradientTransform=\"rotate(118.122 171.182 60.81) scale(205.794)\"\n            gradientUnits=\"userSpaceOnUse\"\n          >\n            <stop stop-color=\"#FF41F8\" />\n            <stop offset=\".707\" stop-color=\"#FF41F8\" stop-opacity=\".5\" />\n            <stop offset=\"1\" stop-color=\"#FF41F8\" stop-opacity=\"0\" />\n          </radialGradient>\n          <linearGradient\n            id=\"b\"\n            x1=\"0\"\n            x2=\"982\"\n            y1=\"192\"\n            y2=\"192\"\n            gradientUnits=\"userSpaceOnUse\"\n          >\n            <stop stop-color=\"#F0060B\" />\n            <stop offset=\"0\" stop-color=\"#F0070C\" />\n            <stop offset=\".526\" stop-color=\"#CC26D5\" />\n            <stop offset=\"1\" stop-color=\"#7702FF\" />\n          </linearGradient>\n          <clipPath id=\"a\"><path fill=\"#fff\" d=\"M0 0h982v239H0z\" /></clipPath>\n        </defs>\n      </svg>\n      <h1>Hello, {{ title }}</h1>\n      <p>Congratulations! Your app is running. 🎉</p>\n    </div>\n    <div class=\"divider\" role=\"separator\" aria-label=\"Divider\"></div>\n    <div class=\"right-side\">\n      <div class=\"pill-group\">\n        @for (item of [\n          { title: 'Explore the Docs', link: 'https://angular.dev' },\n          { title: 'Learn with Tutorials', link: 'https://angular.dev/tutorials' },\n          { title: 'CLI Docs', link: 'https://angular.dev/tools/cli' },\n          { title: 'Angular Language Service', link: 'https://angular.dev/tools/language-service' },\n          { title: 'Angular DevTools', link: 'https://angular.dev/tools/devtools' },\n        ]; track item.title) {\n          <a\n            class=\"pill\"\n            [href]=\"item.link\"\n            target=\"_blank\"\n            rel=\"noopener\"\n          >\n            <span>{{ item.title }}</span>\n            <svg\n              xmlns=\"http://www.w3.org/2000/svg\"\n              height=\"14\"\n              viewBox=\"0 -960 960 960\"\n              width=\"14\"\n              fill=\"currentColor\"\n            >\n              <path\n                d=\"M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z\"\n              />\n            </svg>\n          </a>\n        }\n      </div>\n      <div class=\"social-links\">\n        <a\n          href=\"https://github.com/angular/angular\"\n          aria-label=\"Github\"\n          target=\"_blank\"\n          rel=\"noopener\"\n        >\n          <svg\n            width=\"25\"\n            height=\"24\"\n            viewBox=\"0 0 25 24\"\n            fill=\"none\"\n            xmlns=\"http://www.w3.org/2000/svg\"\n            alt=\"Github\"\n          >\n            <path\n              d=\"M12.3047 0C5.50634 0 0 5.50942 0 12.3047C0 17.7423 3.52529 22.3535 8.41332 23.9787C9.02856 24.0946 9.25414 23.7142 9.25414 23.3871C9.25414 23.0949 9.24389 22.3207 9.23876 21.2953C5.81601 22.0377 5.09414 19.6444 5.09414 19.6444C4.53427 18.2243 3.72524 17.8449 3.72524 17.8449C2.61064 17.082 3.81137 17.0973 3.81137 17.0973C5.04697 17.1835 5.69604 18.3647 5.69604 18.3647C6.79321 20.2463 8.57636 19.7029 9.27978 19.3881C9.39052 18.5924 9.70736 18.0499 10.0591 17.7423C7.32641 17.4347 4.45429 16.3765 4.45429 11.6618C4.45429 10.3185 4.9311 9.22133 5.72065 8.36C5.58222 8.04931 5.16694 6.79833 5.82831 5.10337C5.82831 5.10337 6.85883 4.77319 9.2121 6.36459C10.1965 6.09082 11.2424 5.95546 12.2883 5.94931C13.3342 5.95546 14.3801 6.09082 15.3644 6.36459C17.7023 4.77319 18.7328 5.10337 18.7328 5.10337C19.3942 6.79833 18.9789 8.04931 18.8559 8.36C19.6403 9.22133 20.1171 10.3185 20.1171 11.6618C20.1171 16.3888 17.2409 17.4296 14.5031 17.7321C14.9338 18.1012 15.3337 18.8559 15.3337 20.0084C15.3337 21.6552 15.3183 22.978 15.3183 23.3779C15.3183 23.7009 15.5336 24.0854 16.1642 23.9623C21.0871 22.3484 24.6094 17.7341 24.6094 12.3047C24.6094 5.50942 19.0999 0 12.3047 0Z\"\n            />\n          </svg>\n        </a>\n        <a\n          href=\"https://twitter.com/angular\"\n          aria-label=\"Twitter\"\n          target=\"_blank\"\n          rel=\"noopener\"\n        >\n          <svg\n            width=\"24\"\n            height=\"24\"\n            viewBox=\"0 0 24 24\"\n            fill=\"none\"\n            xmlns=\"http://www.w3.org/2000/svg\"\n            alt=\"Twitter\"\n          >\n            <path\n              d=\"M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z\"\n            />\n          </svg>\n        </a>\n        <a\n          href=\"https://www.youtube.com/channel/UCbn1OgGei-DV7aSRo_HaAiw\"\n          aria-label=\"Youtube\"\n          target=\"_blank\"\n          rel=\"noopener\"\n        >\n          <svg\n            width=\"29\"\n            height=\"20\"\n            viewBox=\"0 0 29 20\"\n            fill=\"none\"\n            xmlns=\"http://www.w3.org/2000/svg\"\n            alt=\"Youtube\"\n          >\n            <path\n              fill-rule=\"evenodd\"\n              clip-rule=\"evenodd\"\n              d=\"M27.4896 1.52422C27.9301 1.96749 28.2463 2.51866 28.4068 3.12258C29.0004 5.35161 29.0004 10 29.0004 10C29.0004 10 29.0004 14.6484 28.4068 16.8774C28.2463 17.4813 27.9301 18.0325 27.4896 18.4758C27.0492 18.9191 26.5 19.2389 25.8972 19.4032C23.6778 20 14.8068 20 14.8068 20C14.8068 20 5.93586 20 3.71651 19.4032C3.11363 19.2389 2.56449 18.9191 2.12405 18.4758C1.68361 18.0325 1.36732 17.4813 1.20683 16.8774C0.613281 14.6484 0.613281 10 0.613281 10C0.613281 10 0.613281 5.35161 1.20683 3.12258C1.36732 2.51866 1.68361 1.96749 2.12405 1.52422C2.56449 1.08095 3.11363 0.76113 3.71651 0.596774C5.93586 0 14.8068 0 14.8068 0C14.8068 0 23.6778 0 25.8972 0.596774C26.5 0.76113 27.0492 1.08095 27.4896 1.52422ZM19.3229 10L11.9036 5.77905V14.221L19.3229 10Z\"\n            />\n          </svg>\n        </a>\n      </div>\n    </div>\n  </div>\n</main>\n\n<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->\n<!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->\n<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * * -->\n<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * * -->\n<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->\n<!-- * * * * * * * * * * End of Placeholder  * * * * * * * * * * * * -->\n<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->\n\n\n"
+            "templateData": "<router-outlet />\n"
+        },
+        {
+            "name": "AppLayoutComponent",
+            "id": "component-AppLayoutComponent-1e0ac45ef7d643bf40e21596aef4af1078301776cbbaae08ceefd9f926dabafede2a295b91618b2d1b1fb6a22dbe28ec11af207530d8206f1b453810412f76fc",
+            "file": "src/app/shared/components/layout/app-layout/app-layout.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-layout",
+            "styleUrls": [],
+            "styles": [],
+            "templateUrl": [
+                "./app-layout.component.html"
+            ],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": true,
+            "imports": [
+                {
+                    "name": "RouterModule",
+                    "type": "module"
+                },
+                {
+                    "name": "HeaderComponent",
+                    "type": "component"
+                },
+                {
+                    "name": "FooterComponent",
+                    "type": "component"
+                }
+            ],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component } from '@angular/core';\nimport { RouterModule } from '@angular/router';\nimport { HeaderComponent } from '../header/header.component';\nimport { FooterComponent } from '../footer/footer.component';\n\n@Component({\n  selector: 'app-layout',\n  standalone: true,\n  imports: [RouterModule, HeaderComponent, FooterComponent],\n  templateUrl: './app-layout.component.html',\n  styleUrl: './app-layout.component.scss'\n})\nexport class AppLayoutComponent {}\n",
+            "styleUrl": "./app-layout.component.scss",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "extends": [],
+            "templateData": "<div class=\"layout\">\n  <app-header />\n  <main class=\"main\">\n    <router-outlet />\n  </main>\n  <app-footer />\n</div>\n"
         },
         {
             "name": "ButtonComponent",
-            "id": "component-ButtonComponent-17fa3d6781bfd15aabc8c36597ada0b0603c48d72782f4ef2d3466c6ece818586a84e05476c1992e3e14ea0b605a56e8d2298c567a81dd89787e16000c5742e3",
+            "id": "component-ButtonComponent-1b5f190caf50e264b70b00d492cf6bd4bbe9985488ea84d17ff2010084bf690aa5cb9aa10d12f5a3daa281ed438300f465b59b80d60eac4e1ca289277efb6b21",
             "file": "src/app/shared/components/atoms/button/button.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -414,37 +717,49 @@
                     "defaultValue": "false",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 17,
                     "type": "boolean",
-                    "decorators": []
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 15,
+                    "required": false
                 },
                 {
                     "name": "size",
                     "defaultValue": "'md'",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 16,
                     "type": "ButtonSize",
-                    "decorators": []
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 14,
+                    "required": false
                 },
                 {
                     "name": "variant",
                     "defaultValue": "'primary'",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 15,
                     "type": "ButtonVariant",
-                    "decorators": []
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 13,
+                    "required": false
                 }
             ],
             "outputsClass": [
                 {
                     "name": "clicked",
-                    "defaultValue": "new EventEmitter<void>()",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 18,
-                    "type": "EventEmitter"
+                    "type": "void",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 16,
+                    "required": false
                 }
             ],
             "propertiesClass": [],
@@ -454,22 +769,17 @@
             "hostBindings": [],
             "hostListeners": [],
             "standalone": true,
-            "imports": [
-                {
-                    "name": "CommonModule",
-                    "type": "module"
-                }
-            ],
+            "imports": [],
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\nexport type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'sage' | 'danger';\nexport type ButtonSize = 'sm' | 'md' | 'lg';\n\n@Component({\n  selector: 'app-button',\n  standalone: true,\n  imports: [CommonModule],\n  templateUrl: './button.component.html',\n  styleUrl: './button.component.scss'\n})\nexport class ButtonComponent {\n  @Input() variant: ButtonVariant = 'primary';\n  @Input() size: ButtonSize = 'md';\n  @Input() disabled = false;\n  @Output() clicked = new EventEmitter<void>();\n}\n",
+            "sourceCode": "import { Component, input, output } from '@angular/core';\n\nexport type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'sage' | 'danger';\nexport type ButtonSize = 'sm' | 'md' | 'lg';\n\n@Component({\n  selector: 'app-button',\n  standalone: true,\n  templateUrl: './button.component.html',\n  styleUrl: './button.component.scss'\n})\nexport class ButtonComponent {\n  variant = input<ButtonVariant>('primary');\n  size = input<ButtonSize>('md');\n  disabled = input<boolean>(false);\n  clicked = output<void>();\n}\n",
             "styleUrl": "./button.component.scss",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
             "extends": [],
-            "templateData": "<button\n  [ngClass]=\"[variant, size]\"\n  [disabled]=\"disabled\"\n  (click)=\"!disabled && clicked.emit()\">\n  <ng-content />\n</button>\n"
+            "templateData": "<button\n  [class]=\"variant() + ' ' + size()\"\n  [disabled]=\"disabled()\"\n  (click)=\"!disabled() && clicked.emit()\">\n  <ng-content />\n</button>\n"
         },
         {
             "name": "FooterComponent",
@@ -516,7 +826,7 @@
             "styleUrlsData": "",
             "stylesData": "",
             "extends": [],
-            "templateData": "<footer class=\"footer\">\n  <div class=\"logo\">Bottle me</div>\n  <nav class=\"links\">\n    <a routerLink=\"/bottles\">Ma cave</a>\n    <a routerLink=\"/bottles/new\">Ajouter</a>\n  </nav>\n  <div class=\"copy\">© 2026 Bottle me</div>\n</footer>\n"
+            "templateData": "<footer class=\"footer\">\n  <div class=\"logo\">Bottle me</div>\n  <nav class=\"links\">\n    <a routerLink=\"/bottles\">Ma cave</a>\n  </nav>\n  <div class=\"copy\">© 2026 Bottle me</div>\n</footer>\n"
         },
         {
             "name": "HeaderComponent",
@@ -567,11 +877,11 @@
             "styleUrlsData": "",
             "stylesData": "",
             "extends": [],
-            "templateData": "<header class=\"header\">\n  <div class=\"logo\">\n    <div class=\"logo-dot\"></div>\n    Bottle me\n  </div>\n  <div class=\"actions\">\n    <app-button variant=\"ghost\" size=\"sm\" routerLink=\"/bottles\">Ma cave</app-button>\n    <app-button variant=\"primary\" size=\"sm\" routerLink=\"/bottles/new\">+ Ajouter un vin</app-button>\n  </div>\n</header>\n"
+            "templateData": "<header class=\"header\">\n  <div class=\"logo\">\n    <div class=\"logo-dot\"></div>\n    Bottle me\n  </div>\n  <div class=\"actions\">\n    <app-button variant=\"ghost\" size=\"sm\" routerLink=\"/bottles\">Ma cave</app-button>\n  </div>\n</header>\n"
         },
         {
             "name": "InputComponent",
-            "id": "component-InputComponent-c38124fe4e9b6ba53b3b54497d90740b885ec3724915c157878268d90d0680f539e531b0dc9df95be812dbdab60131d08110d14a32a9798d04867eacf6aabcd3",
+            "id": "component-InputComponent-f76c3df59e5a9d01aa373a822ac94b92097748d8f8c0578dd6bcd318028faa1fcd4b7a0113641f25b86b4323042e144bf3df2a68bc14359eee83ef0a00449ea7",
             "file": "src/app/shared/components/atoms/input/input.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -855,7 +1165,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';\nimport { CommonModule } from '@angular/common';\n\n@Component({\n  selector: 'app-input',\n  standalone: true,\n  imports: [CommonModule, ReactiveFormsModule],\n  templateUrl: './input.component.html',\n  styleUrl: './input.component.scss',\n  providers: [{\n    provide: NG_VALUE_ACCESSOR,\n    useExisting: forwardRef(() => InputComponent),\n    multi: true\n  }]\n})\nexport class InputComponent implements ControlValueAccessor {\n  @Input() placeholder = '';\n  @Input() type = 'text';\n  @Input() disabled = false;\n  @Input() error = false;\n\n  value = '';\n  focused = false;\n\n  onChange = (_: any) => {};\n  onTouched = () => {};\n\n  writeValue(val: string) { this.value = val ?? ''; }\n  registerOnChange(fn: any) { this.onChange = fn; }\n  registerOnTouched(fn: any) { this.onTouched = fn; }\n  setDisabledState(disabled: boolean) { this.disabled = disabled; }\n\n  onInput(e: Event) {\n    this.value = (e.target as HTMLInputElement).value;\n    this.onChange(this.value);\n  }\n}\n",
+            "sourceCode": "import { Component, Input, forwardRef } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';\nimport { CommonModule } from '@angular/common';\n\n@Component({\n  selector: 'app-input',\n  standalone: true,\n  imports: [CommonModule, ReactiveFormsModule],\n  templateUrl: './input.component.html',\n  styleUrl: './input.component.scss',\n  providers: [{\n    provide: NG_VALUE_ACCESSOR,\n    useExisting: forwardRef(() => InputComponent),\n    multi: true\n  }]\n})\nexport class InputComponent implements ControlValueAccessor {\n  @Input() placeholder = '';\n  @Input() type = 'text';\n  @Input() disabled = false;\n  @Input() error = false;\n\n  value = '';\n  focused = false;\n\n  onChange = (_: any) => {};\n  onTouched = () => {};\n\n  writeValue(val: string) { this.value = val ?? ''; }\n  registerOnChange(fn: any) { this.onChange = fn; }\n  registerOnTouched(fn: any) { this.onTouched = fn; }\n  setDisabledState(disabled: boolean) { this.disabled = disabled; }\n\n  onInput(e: Event) {\n    this.value = (e.target as HTMLInputElement).value;\n    this.onChange(this.value);\n  }\n}\n",
             "styleUrl": "./input.component.scss",
             "assetsDirs": [],
             "styleUrlsData": "",
@@ -864,11 +1174,120 @@
             "implements": [
                 "ControlValueAccessor"
             ],
-            "templateData": "<input\n  [type]=\"type\"\n  [placeholder]=\"placeholder\"\n  [disabled]=\"disabled\"\n  [value]=\"value\"\n  [class.focused]=\"focused\"\n  [class.error]=\"error\"\n  [class.disabled]=\"disabled\"\n  (input)=\"onInput($event)\"\n  (focus)=\"focused = true; onTouched()\"\n  (blur)=\"focused = false\"\n/>\n"
+            "templateData": "<input\n  [type]=\"type\"\n  [placeholder]=\"placeholder\"\n  [disabled]=\"disabled\"\n  [value]=\"value ?? ''\"\n  [class.focused]=\"focused\"\n  [class.error]=\"error\"\n  [class.disabled]=\"disabled\"\n  (input)=\"onInput($event)\"\n  (focus)=\"focused = true; onTouched()\"\n  (blur)=\"focused = false\"\n/>\n"
+        },
+        {
+            "name": "PeakWindowComponent",
+            "id": "component-PeakWindowComponent-569ab932e453f070a4c575697a8e75007b5a326b0708d8b1a6f7e854aabbb753d4a8232f4aac2888efbd453ce428bfe423f02c9006f9fdeaf1529240453852f8",
+            "file": "src/app/shared/components/molecules/peak-window/peak-window.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-peak-window",
+            "styleUrls": [],
+            "styles": [],
+            "templateUrl": [
+                "./peak-window.component.html"
+            ],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [
+                {
+                    "name": "maturity",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "VintageMaturity",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 13,
+                    "required": false
+                },
+                {
+                    "name": "score",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 12,
+                    "required": false
+                },
+                {
+                    "name": "status",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "DrinkingStatus",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 11,
+                    "required": true
+                },
+                {
+                    "name": "vintage",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 14,
+                    "required": true
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "config",
+                    "defaultValue": "{\n    'not-ready':  { label: 'Pas encore prêt',  dot: '#A67C2E', bg: '#EDE0B0', text: '#7A5A10' },\n    'ready':      { label: 'À son apogée',      dot: '#3D7A58', bg: '#C4E0D0', text: '#3D7A58' },\n    'past-peak':  { label: 'Passé son apogée',  dot: '#B83020', bg: '#F5DDD8', text: '#B83020' },\n    'unknown':    { label: 'Non répertorié',    dot: '#A89880', bg: '#EDE7D9', text: '#A89880' },\n  }",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "object",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 16,
+                    "modifierKind": [
+                        148
+                    ]
+                },
+                {
+                    "name": "style",
+                    "defaultValue": "computed(() => this.config[this.status()])",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 23
+                }
+            ],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": true,
+            "imports": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, input, computed } from '@angular/core';\nimport {DrinkingStatus, VintageMaturity} from '../../../../core/services/vintage-maturity.service';\n\n@Component({\n  selector: 'app-peak-window',\n  standalone: true,\n  templateUrl: './peak-window.component.html',\n  styleUrl: './peak-window.component.scss'\n})\nexport class PeakWindowComponent {\n  status = input.required<DrinkingStatus>();\n  score = input<number>();\n  maturity = input<VintageMaturity>();\n  vintage = input.required<number>();\n\n  readonly config = {\n    'not-ready':  { label: 'Pas encore prêt',  dot: '#A67C2E', bg: '#EDE0B0', text: '#7A5A10' },\n    'ready':      { label: 'À son apogée',      dot: '#3D7A58', bg: '#C4E0D0', text: '#3D7A58' },\n    'past-peak':  { label: 'Passé son apogée',  dot: '#B83020', bg: '#F5DDD8', text: '#B83020' },\n    'unknown':    { label: 'Non répertorié',    dot: '#A89880', bg: '#EDE7D9', text: '#A89880' },\n  };\n\n  style = computed(() => this.config[this.status()]);\n}\n",
+            "styleUrl": "./peak-window.component.scss",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "extends": [],
+            "templateData": "<div class=\"peak-window\" [style.background]=\"style().bg\">\n  <div class=\"dot\" [style.background]=\"style().dot\"></div>\n  <span class=\"label\" [style.color]=\"style().text\">{{ style().label }}</span>\n  @if (score()) {\n    <span class=\"score\" [style.color]=\"style().dot\">{{ score() }} pts</span>\n  }\n</div>\n"
         },
         {
             "name": "SelectComponent",
-            "id": "component-SelectComponent-b31022ca87bb0c922d0682f71c796f384eb424473e00655c1fc66dd65b8f48e6d1f35cff7df8d792c1316ca9f5a5909e73b846d88ee67d7661276d13b5c0c4d0",
+            "id": "component-SelectComponent-9be8f2d9d90b5e1e8bce85078ae9c1a27f414937e0572742f468eaab88d4f16e4ec24020de675f9f8890e9933c5da6710b614deecee729d5491804972c3f8ed6",
             "file": "src/app/shared/components/atoms/select/select.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1143,7 +1562,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, Input, forwardRef } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';\nimport { CommonModule } from '@angular/common';\n\nexport interface SelectOption {\n  value: string;\n  label: string;\n}\n\n@Component({\n  selector: 'app-select',\n  standalone: true,\n  imports: [CommonModule, ReactiveFormsModule],\n  templateUrl: './select.component.html',\n  styleUrl: './select.component.scss',\n  providers: [{\n    provide: NG_VALUE_ACCESSOR,\n    useExisting: forwardRef(() => SelectComponent),\n    multi: true\n  }]\n})\nexport class SelectComponent implements ControlValueAccessor {\n  @Input() placeholder = 'Sélectionner…';\n  @Input() options: SelectOption[] = [];\n  @Input() disabled = false;\n\n  value = '';\n  focused = false;\n\n  onChange = (_: any) => {};\n  onTouched = () => {};\n\n  writeValue(val: string) { this.value = val ?? ''; }\n  registerOnChange(fn: any) { this.onChange = fn; }\n  registerOnTouched(fn: any) { this.onTouched = fn; }\n  setDisabledState(disabled: boolean) { this.disabled = disabled; }\n\n  onSelect(e: Event) {\n    this.value = (e.target as HTMLSelectElement).value;\n    this.onChange(this.value);\n  }\n}\n",
+            "sourceCode": "import { Component, Input, forwardRef } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';\nimport {CommonModule} from '@angular/common';\n\nexport interface SelectOption {\n  value: string;\n  label: string;\n}\n\n@Component({\n  selector: 'app-select',\n  standalone: true,\n  imports: [CommonModule, ReactiveFormsModule],\n  templateUrl: './select.component.html',\n  styleUrl: './select.component.scss',\n  providers: [{\n    provide: NG_VALUE_ACCESSOR,\n    useExisting: forwardRef(() => SelectComponent),\n    multi: true\n  }]\n})\nexport class SelectComponent implements ControlValueAccessor {\n  @Input() placeholder = 'Sélectionner…';\n  @Input() options: SelectOption[] = [];\n  @Input() disabled = false;\n\n  value = '';\n  focused = false;\n\n  onChange = (_: any) => {};\n  onTouched = () => {};\n\n  writeValue(val: string) { this.value = val ?? ''; }\n  registerOnChange(fn: any) { this.onChange = fn; }\n  registerOnTouched(fn: any) { this.onTouched = fn; }\n  setDisabledState(disabled: boolean) { this.disabled = disabled; }\n\n  onSelect(e: Event) {\n    this.value = (e.target as HTMLSelectElement).value;\n    this.onChange(this.value);\n  }\n}\n",
             "styleUrl": "./select.component.scss",
             "assetsDirs": [],
             "styleUrlsData": "",
@@ -1152,11 +1571,11 @@
             "implements": [
                 "ControlValueAccessor"
             ],
-            "templateData": "<select\n  [disabled]=\"disabled\"\n  [class.focused]=\"focused\"\n  [class.has-value]=\"value\"\n  (change)=\"onSelect($event)\"\n  (focus)=\"focused = true; onTouched()\"\n  (blur)=\"focused = false\">\n  <option value=\"\" disabled [selected]=\"!value\">{{ placeholder }}</option>\n  <option *ngFor=\"let opt of options\" [value]=\"opt.value\">{{ opt.label }}</option>\n</select>\n"
+            "templateData": "<select\n  [disabled]=\"disabled\"\n  [class.focused]=\"focused\"\n  [class.has-value]=\"value\"\n  (change)=\"onSelect($event)\"\n  (focus)=\"focused = true; onTouched()\"\n  (blur)=\"focused = false\">\n  <option value=\"\" disabled [selected]=\"!value\">{{ placeholder }}</option>\n  @for (opt of options; track opt.value) {\n    <option [value]=\"opt.value\">{{ opt.label }}</option>\n  }\n</select>\n"
         },
         {
             "name": "StatCellComponent",
-            "id": "component-StatCellComponent-c964d3fdeb60d76d072f415bd103c1f793dde4471ed433c496a4bda6ec6ec94df919522656b3d69d890948b2bd9f72f23e1b0343f0668196d479730f48b0241b",
+            "id": "component-StatCellComponent-46da4f36c0bbd79ac799934e0a569ff60645882ea5e73bf0cc0574a5d0237886966f5e12b52633e30fc63fffdc4009804b7176e1470e453f3f4e8cea30966f77",
             "file": "src/app/shared/components/molecules/stat-cell/stat-cell.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1177,42 +1596,57 @@
                     "defaultValue": "false",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 16,
                     "type": "boolean",
-                    "decorators": []
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 14,
+                    "required": false
                 },
                 {
                     "name": "color",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 14,
                     "type": "string",
-                    "decorators": []
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 12,
+                    "required": false
                 },
                 {
                     "name": "label",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 12,
                     "type": "string",
-                    "decorators": []
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 10,
+                    "required": true
                 },
                 {
                     "name": "small",
                     "defaultValue": "false",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 15,
                     "type": "boolean",
-                    "decorators": []
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 13,
+                    "required": false
                 },
                 {
                     "name": "value",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 13,
                     "type": "string",
-                    "decorators": []
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 11,
+                    "required": true
                 }
             ],
             "outputsClass": [],
@@ -1223,22 +1657,17 @@
             "hostBindings": [],
             "hostListeners": [],
             "standalone": true,
-            "imports": [
-                {
-                    "name": "CommonModule",
-                    "type": "module"
-                }
-            ],
+            "imports": [],
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, Input } from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\n@Component({\n  selector: 'app-stat-cell',\n  standalone: true,\n  imports: [CommonModule],\n  templateUrl: './stat-cell.component.html',\n  styleUrl: './stat-cell.component.scss'\n})\nexport class StatCellComponent {\n  @Input() label!: string;\n  @Input() value!: string;\n  @Input() color?: string;\n  @Input() small = false;\n  @Input() border = false;\n}\n",
+            "sourceCode": "import { Component, input } from '@angular/core';\n\n@Component({\n  selector: 'app-stat-cell',\n  standalone: true,\n  templateUrl: './stat-cell.component.html',\n  styleUrl: './stat-cell.component.scss'\n})\nexport class StatCellComponent {\n  label = input.required<string>();\n  value = input.required<string>();\n  color = input<string>();\n  small = input<boolean>(false);\n  border = input<boolean>(false);\n}\n",
             "styleUrl": "./stat-cell.component.scss",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
             "extends": [],
-            "templateData": "<div class=\"stat-cell\" [class.border]=\"border\">\n  <div class=\"value\" [class.small]=\"small\" [style.color]=\"color\">{{ value }}</div>\n  <div class=\"label\">{{ label }}</div>\n</div>\n"
+            "templateData": "<div class=\"stat-cell\" [class.border]=\"border()\">\n  <div class=\"value\" [class.small]=\"small()\" [style.color]=\"color()\">{{ value() }}</div>\n  <div class=\"label\">{{ label() }}</div>\n</div>\n"
         },
         {
             "name": "TastingNoteComponent",
@@ -1578,7 +2007,7 @@
         },
         {
             "name": "WineCardComponent",
-            "id": "component-WineCardComponent-8318a0e306aa608ed7f782615827585f931a31978a0f419500b42a8b54363ef0b6fbfb18468e4ac8163e1d98b2e05d574f4b25cbc6367eef3227a450e001182f",
+            "id": "component-WineCardComponent-cbde34e7a5d68394833f2c708eac2af74505fa0e2cce31bd565d9f5a9ce0977da5b844a1fe6eddd7e5c589f8090d29c9ce4b6b1137903e8b172d05fd38d4552c",
             "file": "src/app/shared/components/molecules/wine-card/wine-card.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1598,19 +2027,25 @@
                     "name": "bottle",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 14,
                     "type": "Bottle",
-                    "decorators": []
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 13,
+                    "required": true
                 }
             ],
             "outputsClass": [
                 {
                     "name": "clicked",
-                    "defaultValue": "new EventEmitter<Bottle>()",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 15,
-                    "type": "EventEmitter"
+                    "type": "Bottle",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 14,
+                    "required": false
                 }
             ],
             "propertiesClass": [],
@@ -1622,10 +2057,6 @@
             "standalone": true,
             "imports": [
                 {
-                    "name": "CommonModule",
-                    "type": "module"
-                },
-                {
                     "name": "WineTypeBadgeComponent",
                     "type": "component"
                 }
@@ -1633,17 +2064,810 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { Bottle } from '../../../models/bottle.model';\nimport {WineTypeBadgeComponent} from '../../atoms/wine-type-badge/wine-type-badge.component';\n\n@Component({\n  selector: 'app-wine-card',\n  standalone: true,\n  imports: [CommonModule, WineTypeBadgeComponent],\n  templateUrl: './wine-card.component.html',\n  styleUrl: './wine-card.component.scss'\n})\nexport class WineCardComponent {\n  @Input() bottle!: Bottle;\n  @Output() clicked = new EventEmitter<Bottle>();\n}\n",
+            "sourceCode": "import { Component, input, output } from '@angular/core';\nimport { Bottle } from '../../../models/bottle.model';\nimport {WineTypeBadgeComponent} from '../../atoms/wine-type-badge/wine-type-badge.component';\n\n@Component({\n  selector: 'app-wine-card',\n  standalone: true,\n  imports: [WineTypeBadgeComponent],\n  templateUrl: './wine-card.component.html',\n  styleUrl: './wine-card.component.scss'\n})\nexport class WineCardComponent {\n  bottle = input.required<Bottle>();\n  clicked = output<Bottle>();\n}\n",
             "styleUrl": "./wine-card.component.scss",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
             "extends": [],
-            "templateData": "<div class=\"card\" (click)=\"clicked.emit(bottle)\">\n  <div class=\"card-top\">\n    <app-wine-type-badge [type]=\"bottle.type\" />\n    <span class=\"vintage\">{{ bottle.vintage }}</span>\n  </div>\n  <div class=\"wine-name\">{{ bottle.name }}</div>\n  <div class=\"appellation\">{{ bottle.designation }}</div>\n  <div class=\"card-bottom\">\n    <span class=\"qty\">×<span class=\"qty-value\">{{ bottle.quantity }}</span> btl.</span>\n  </div>\n</div>\n"
+            "templateData": "<div class=\"card\" (click)=\"clicked.emit(bottle())\">\n  <div class=\"card-top\">\n    <app-wine-type-badge [type]=\"bottle().type\" />\n    <span class=\"vintage\">{{ bottle().vintage }}</span>\n  </div>\n  <div class=\"wine-name\">{{ bottle().name }}</div>\n  <div class=\"appellation\">{{ bottle().appellation }}</div>\n  <div class=\"card-bottom\">\n    <span class=\"qty\">×<span class=\"qty-value\">{{ bottle().quantity }}</span> btl.</span>\n  </div>\n</div>\n"
+        },
+        {
+            "name": "WineDetailComponent",
+            "id": "component-WineDetailComponent-c5d309c03ac0a178bcd3a36d13e8b14150fdb41af276f916707f861a1cd25b422ad76c8b493dea62568bf763c5a74d1eda3baa2573fa610600569b2a6bedb8ec",
+            "file": "src/app/features/wine-detail/wine-detail.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-wine-detail",
+            "styleUrls": [],
+            "styles": [],
+            "templateUrl": [
+                "./wine-detail.component.html"
+            ],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "bottle",
+                    "defaultValue": "signal<Bottle | null>(null)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 21
+                },
+                {
+                    "name": "bottleService",
+                    "defaultValue": "inject(BottleService)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 19,
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "route",
+                    "defaultValue": "inject(ActivatedRoute)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 17,
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "router",
+                    "defaultValue": "inject(Router)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 18,
+                    "modifierKind": [
+                        123
+                    ]
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 23,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "onBack",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 39,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "onDelete",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 32,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "onEdit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 28,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": true,
+            "imports": [
+                {
+                    "name": "RouterModule",
+                    "type": "module"
+                },
+                {
+                    "name": "WineHeroCardComponent",
+                    "type": "component"
+                },
+                {
+                    "name": "TastingNoteComponent",
+                    "type": "component"
+                },
+                {
+                    "name": "ButtonComponent",
+                    "type": "component"
+                }
+            ],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, OnInit, inject, signal } from '@angular/core';\nimport { ActivatedRoute, Router, RouterModule } from '@angular/router';\nimport { BottleService } from '../../core/services/bottle.service';\nimport { Bottle } from '../../shared/models/bottle.model';\nimport { WineHeroCardComponent } from '../../shared/components/molecules/wine-hero-card/wine-hero-card.component';\nimport { TastingNoteComponent } from '../../shared/components/molecules/tasting-note/tasting-note.component';\nimport { ButtonComponent } from '../../shared/components/atoms/button/button.component';\n\n@Component({\n  selector: 'app-wine-detail',\n  standalone: true,\n  imports: [RouterModule, WineHeroCardComponent, TastingNoteComponent, ButtonComponent],\n  templateUrl: './wine-detail.component.html',\n  styleUrl: './wine-detail.component.scss'\n})\nexport class WineDetailComponent implements OnInit {\n  private route = inject(ActivatedRoute);\n  private router = inject(Router);\n  private bottleService = inject(BottleService);\n\n  bottle = signal<Bottle | null>(null);\n\n  ngOnInit() {\n    const id = this.route.snapshot.paramMap.get('id')!;\n    this.bottleService.getById(id).subscribe(b => this.bottle.set(b));\n  }\n\n  onEdit() {\n    this.router.navigate(['/bottles', this.bottle()?.id, 'edit']);\n  }\n\n  onDelete() {\n    if (!confirm('Supprimer ce vin ?')) return;\n    this.bottleService.delete(this.bottle()!.id).subscribe(() => {\n      this.router.navigate(['/bottles']);\n    });\n  }\n\n  onBack() {\n    this.router.navigate(['/bottles']);\n  }\n}\n",
+            "styleUrl": "./wine-detail.component.scss",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "extends": [],
+            "implements": [
+                "OnInit"
+            ],
+            "templateData": "<div class=\"wine-detail\">\n\n  <div class=\"page-header\">\n    <a class=\"back\" routerLink=\"/bottles\">← Ma cave</a>\n  </div>\n\n  @if (bottle()) {\n    <app-wine-hero-card [bottle]=\"bottle()!\" />\n\n    @if (bottle()!.notes) {\n      <div class=\"tasting-section\">\n        <div class=\"section-label\">Note de dégustation</div>\n        <app-tasting-note [note]=\"bottle()!.notes!\" />\n      </div>\n    }\n\n    <div class=\"actions\">\n      <app-button variant=\"danger\" size=\"sm\" (clicked)=\"onDelete()\">Supprimer</app-button>\n      <div class=\"actions-right\">\n        <app-button variant=\"secondary\" size=\"sm\" (clicked)=\"onBack()\">← Retour</app-button>\n        <app-button variant=\"primary\" size=\"sm\" (clicked)=\"onEdit()\">Modifier</app-button>\n      </div>\n    </div>\n  }\n\n</div>\n"
+        },
+        {
+            "name": "WineFormComponent",
+            "id": "component-WineFormComponent-e29b2831680375555aab456ebe685058aae841ca0d2d2d28fa0e432904e501f99e60588c05c1b599bc3da15d20741f49c3071b94cf633ee056dcaf22e7b178f9",
+            "file": "src/app/features/wine-form/wine-form.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-wine-form",
+            "styleUrls": [],
+            "styles": [],
+            "templateUrl": [
+                "./wine-form.component.html"
+            ],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "bottleService",
+                    "defaultValue": "inject(BottleService)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 21,
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "fb",
+                    "defaultValue": "inject(FormBuilder)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 19,
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "form",
+                    "defaultValue": "this.fb.group({\n    name:        ['', Validators.required],\n    appellation: ['', Validators.required],\n    vintage:     [null as string | null, Validators.required],\n    type:        [null as WineType | null, Validators.required],\n    region:      [null as string | null],\n    customRegion:[''],\n    price:       [null as number | null, Validators.min(0)],\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 42
+                },
+                {
+                    "name": "quantity",
+                    "defaultValue": "signal(1)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 23
+                },
+                {
+                    "name": "regions",
+                    "defaultValue": "WINE_REGION_OPTIONS",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 39,
+                    "modifierKind": [
+                        148
+                    ]
+                },
+                {
+                    "name": "router",
+                    "defaultValue": "inject(Router)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 20,
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "showCustomRegion",
+                    "defaultValue": "signal(false)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 40
+                },
+                {
+                    "name": "types",
+                    "defaultValue": "[\n    { value: 'RED',       label: 'Rouge'     },\n    { value: 'WHITE',     label: 'Blanc'     },\n    { value: 'PINK',      label: 'Rosé'      },\n    { value: 'SPARKLING', label: 'Pétillant' },\n    { value: 'CHAMPAGNE', label: 'Champagne' },\n    { value: 'SWEET',     label: 'Liquoreux' },\n  ]",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "literal type[]",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 25,
+                    "modifierKind": [
+                        148
+                    ]
+                },
+                {
+                    "name": "vintages",
+                    "defaultValue": "Array.from(\n    { length: new Date().getFullYear() - 1900 + 1 },\n    (_, i) => new Date().getFullYear() - i\n  ).map(y => ({ value: String(y), label: String(y) }))",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 34,
+                    "modifierKind": [
+                        148
+                    ]
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "decrement",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 60,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "increment",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 59,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "onCancel",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 62,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "onRegionChange",
+                    "args": [
+                        {
+                            "name": "value",
+                            "type": "string",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 52,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "value",
+                            "type": "string",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "onSubmit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 64,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "selectType",
+                    "args": [
+                        {
+                            "name": "type",
+                            "type": "WineType",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 61,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "type",
+                            "type": "WineType",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": true,
+            "imports": [
+                {
+                    "name": "ReactiveFormsModule",
+                    "type": "module"
+                },
+                {
+                    "name": "RouterModule",
+                    "type": "module"
+                },
+                {
+                    "name": "InputComponent",
+                    "type": "component"
+                },
+                {
+                    "name": "ButtonComponent",
+                    "type": "component"
+                },
+                {
+                    "name": "SelectComponent",
+                    "type": "component"
+                }
+            ],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, inject, signal } from '@angular/core';\nimport { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';\nimport { RouterModule, Router } from '@angular/router';\nimport { BottleService } from '../../core/services/bottle.service';\nimport { WineType } from '../../shared/models/bottle.model';\nimport { InputComponent } from '../../shared/components/atoms/input/input.component';\nimport {ButtonComponent} from '../../shared/components/atoms/button/button.component';\nimport {SelectComponent} from '../../shared/components/atoms/select/select.component';\nimport {WINE_REGION_OPTIONS, WineRegion} from '../../shared/models/wine-region.model';\n\n@Component({\n  selector: 'app-wine-form',\n  standalone: true,\n  imports: [ReactiveFormsModule, RouterModule, InputComponent, ButtonComponent, SelectComponent],\n  templateUrl: './wine-form.component.html',\n  styleUrl: './wine-form.component.scss'\n})\nexport class WineFormComponent {\n  private fb = inject(FormBuilder);\n  private router = inject(Router);\n  private bottleService = inject(BottleService);\n\n  quantity = signal(1);\n\n  readonly types: { value: WineType; label: string }[] = [\n    { value: 'RED',       label: 'Rouge'     },\n    { value: 'WHITE',     label: 'Blanc'     },\n    { value: 'PINK',      label: 'Rosé'      },\n    { value: 'SPARKLING', label: 'Pétillant' },\n    { value: 'CHAMPAGNE', label: 'Champagne' },\n    { value: 'SWEET',     label: 'Liquoreux' },\n  ];\n\n  readonly vintages = Array.from(\n    { length: new Date().getFullYear() - 1900 + 1 },\n    (_, i) => new Date().getFullYear() - i\n  ).map(y => ({ value: String(y), label: String(y) }));\n\n  readonly regions = WINE_REGION_OPTIONS;\n  showCustomRegion = signal(false);\n\n  form = this.fb.group({\n    name:        ['', Validators.required],\n    appellation: ['', Validators.required],\n    vintage:     [null as string | null, Validators.required],\n    type:        [null as WineType | null, Validators.required],\n    region:      [null as string | null],\n    customRegion:[''],\n    price:       [null as number | null, Validators.min(0)],\n  });\n\n  onRegionChange(value: string) {\n    this.showCustomRegion.set(value === WineRegion.OTHER);\n    if (value !== WineRegion.OTHER) {\n      this.form.patchValue({ customRegion: '' });\n    }\n  }\n\n  increment() { this.quantity.update(q => q + 1); }\n  decrement() { if (this.quantity() > 1) this.quantity.update(q => q - 1); }\n  selectType(type: WineType) { this.form.patchValue({ type }); }\n  onCancel() { this.router.navigate(['/bottles']); }\n\n  onSubmit() {\n    if (this.form.invalid) return;\n    const { customRegion, ...rest } = this.form.value;\n    const payload = {\n      ...rest,\n      vintage: Number(this.form.value.vintage),\n      quantity: this.quantity(),\n      region: this.showCustomRegion() ? customRegion : rest.region,\n    };\n    this.bottleService.create(payload as any).subscribe(() => {\n      this.router.navigate(['/bottles']);\n    });\n  }\n}\n",
+            "styleUrl": "./wine-form.component.scss",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "extends": [],
+            "templateData": "<div class=\"wine-form\">\n\n  <div class=\"page-header\">\n    <a class=\"back\" routerLink=\"/bottles\">← Ma cave</a>\n    <h1 class=\"page-title\">Ajouter un <span>vin</span></h1>\n  </div>\n\n  <div class=\"form-card\" [formGroup]=\"form\">\n\n    <!-- Nom du vin -->\n    <div class=\"form-group\">\n      <label class=\"label\">Nom du vin <span class=\"required\">*</span></label>\n      <app-input\n        formControlName=\"name\"\n        placeholder=\"Ex. Château Margaux\"\n        [error]=\"form.get('name')?.invalid === true && form.get('name')?.touched === true\" />\n    </div>\n\n    <!-- Appellation + Région -->\n    <div class=\"form-row\">\n      <div class=\"form-group\">\n        <label class=\"label\">Appellation <span class=\"required\">*</span></label>\n        <app-input\n          formControlName=\"appellation\"\n          placeholder=\"Ex. Margaux\"\n          [error]=\"form.get('appellation')?.invalid === true && form.get('appellation')?.touched === true\" />\n      </div>\n      <div class=\"form-group\">\n        <label class=\"label\">Région</label>\n        <app-input\n          formControlName=\"region\"\n          placeholder=\"Ex. Bordeaux\" />\n      </div>\n    </div>\n\n    <!-- Millésime -->\n    <div class=\"form-group\">\n      <label class=\"label\">Millésime <span class=\"required\">*</span></label>\n      <app-select\n        formControlName=\"vintage\"\n        placeholder=\"Sélectionner…\"\n        [options]=\"vintages\" />\n    </div>\n\n    <!-- Type de vin -->\n    <div class=\"form-group\">\n      <label class=\"label\">Type de vin <span class=\"required\">*</span></label>\n      <div class=\"type-pills\">\n        @for (t of types; track t.value) {\n          <button\n            type=\"button\"\n            class=\"type-pill\"\n            [class]=\"'type-pill' + (form.value.type === t.value ? ' selected pill-' + t.value.toLowerCase() : '')\"\n            (click)=\"selectType(t.value)\">\n            {{ t.label }}\n          </button>\n        }\n      </div>\n    </div>\n\n    <div class=\"form-row\">\n      <div class=\"form-group\">\n        <label class=\"label\">Région</label>\n        <app-select\n          formControlName=\"region\"\n          placeholder=\"Sélectionner une région\"\n          [options]=\"regions\"\n          (change)=\"onRegionChange(form.value.region!)\" />\n      </div>\n      @if (showCustomRegion()) {\n        <div class=\"form-group\">\n          <label class=\"label\">Région personnalisée</label>\n          <app-input\n            formControlName=\"customRegion\"\n            placeholder=\"Ex. Priorat\" />\n        </div>\n      }\n    </div>\n\n    <!-- Quantité + Prix -->\n    <div class=\"form-row\">\n      <div class=\"form-group\">\n        <label class=\"label\">Quantité <span class=\"required\">*</span></label>\n        <div class=\"qty-wrapper\">\n          <button type=\"button\" class=\"qty-btn\" (click)=\"decrement()\">−</button>\n          <span class=\"qty-value\">{{ quantity() }}</span>\n          <button type=\"button\" class=\"qty-btn\" (click)=\"increment()\">+</button>\n        </div>\n      </div>\n      <div class=\"form-group\">\n        <label class=\"label\">Prix / bouteille</label>\n        <div class=\"price-wrapper\">\n          <app-input\n            formControlName=\"price\"\n            type=\"number\"\n            placeholder=\"45\" />\n        </div>\n      </div>\n    </div>\n\n    <div class=\"divider\"></div>\n\n    <!-- Actions -->\n    <div class=\"form-actions\">\n      <app-button variant=\"secondary\" (clicked)=\"onCancel()\">Annuler</app-button>\n      <app-button variant=\"primary\" (clicked)=\"onSubmit()\">Ajouter le vin</app-button>\n    </div>\n\n  </div>\n</div>\n"
+        },
+        {
+            "name": "WineHeroCardComponent",
+            "id": "component-WineHeroCardComponent-1f347ba997fa0376dcecd4a3f42deb437c7dd582de9623a55e1584a7d0610ab5bac7204cf08096ad93c09e114aa56cd1d579cc450e2a47b23e6c0da1e4cef739",
+            "file": "src/app/shared/components/molecules/wine-hero-card/wine-hero-card.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-wine-hero-card",
+            "styleUrls": [],
+            "styles": [],
+            "templateUrl": [
+                "./wine-hero-card.component.html"
+            ],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [
+                {
+                    "name": "bottle",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Bottle",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 15,
+                    "required": true
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": true,
+            "imports": [
+                {
+                    "name": "WineTypeBadgeComponent",
+                    "type": "component"
+                },
+                {
+                    "name": "StatCellComponent",
+                    "type": "component"
+                }
+            ],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, input } from '@angular/core';\nimport { Bottle } from '../../../models/bottle.model';\n\nimport { StatCellComponent } from '../stat-cell/stat-cell.component';\nimport {WineTypeBadgeComponent} from '../../atoms/wine-type-badge/wine-type-badge.component';\n\n@Component({\n  selector: 'app-wine-hero-card',\n  standalone: true,\n  imports: [WineTypeBadgeComponent, StatCellComponent],\n  templateUrl: './wine-hero-card.component.html',\n  styleUrl: './wine-hero-card.component.scss'\n})\nexport class WineHeroCardComponent {\n  bottle = input.required<Bottle>();\n}\n",
+            "styleUrl": "./wine-hero-card.component.scss",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "extends": [],
+            "templateData": "<div class=\"hero-card\">\n\n  <div class=\"hero-top\">\n    <div class=\"hero-left\">\n      <div class=\"meta\">\n        <app-wine-type-badge [type]=\"bottle().type\" />\n        <span class=\"vintage\">{{ bottle().vintage }}</span>\n      </div>\n      <h1 class=\"name\">{{ bottle().name }}</h1>\n      <div class=\"designation\">{{ bottle().appellation }}</div>\n    </div>\n\n    @if (bottle().score) {\n      <div class=\"score\">\n        <div class=\"score-value\">{{ bottle().score }}</div>\n        <div class=\"score-label\">pts</div>\n      </div>\n    }\n  </div>\n\n  <div class=\"stats\">\n    <app-stat-cell label=\"En cave\" [value]=\"'×' + bottle().quantity\" color=\"#3D7A58\" [border]=\"true\" />\n    <app-stat-cell label=\"Prix / btl.\" [value]=\"bottle().price ? bottle().price + ' €' : '—'\" color=\"#C4522A\" [border]=\"true\" />\n    <app-stat-cell label=\"Millésime\" [value]=\"bottle().vintage.toString()\" color=\"#A67C2E\" />\n  </div>\n\n</div>\n"
+        },
+        {
+            "name": "WineListComponent",
+            "id": "component-WineListComponent-674e06b86bbc59db1727fa41e8290087a6d8820d90d1278ca2f8623133b5d5cb7759c355e9ac2fa5f9f0cf30f0819dc6b1f1940f62dbce977aa4530502cd8e60",
+            "file": "src/app/features/wine-list/wine-list.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-wine-list",
+            "styleUrls": [],
+            "styles": [],
+            "templateUrl": [
+                "./wine-list.component.html"
+            ],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "bottles",
+                    "defaultValue": "signal<Bottle[]>([])",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 20
+                },
+                {
+                    "name": "bottleService",
+                    "defaultValue": "inject(BottleService)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 17,
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "filteredBottles",
+                    "defaultValue": "signal<Bottle[]>([])",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 21
+                },
+                {
+                    "name": "router",
+                    "defaultValue": "inject(Router)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 18,
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "searchQuery",
+                    "defaultValue": "signal('')",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 23
+                },
+                {
+                    "name": "selectedType",
+                    "defaultValue": "signal<WineType | null>(null)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 22
+                },
+                {
+                    "name": "types",
+                    "defaultValue": "[\n    { value: 'RED', label: 'Rouge' },\n    { value: 'WHITE', label: 'Blanc' },\n    { value: 'PINK', label: 'Rosé' },\n    { value: 'SPARKLING', label: 'Pétillant' },\n    { value: 'CHAMPAGNE', label: 'Champagne' },\n    { value: 'SWEET', label: 'Liquoreux' },\n  ]",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "literal type[]",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 25,
+                    "modifierKind": [
+                        148
+                    ]
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "applyFilters",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 63,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "filterByType",
+                    "args": [
+                        {
+                            "name": "type",
+                            "type": "WineType | null",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 53,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "type",
+                            "type": "WineType | null",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 34,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "onAddClick",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 82,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "onCardClick",
+                    "args": [
+                        {
+                            "name": "bottle",
+                            "type": "Bottle",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 78,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "bottle",
+                            "type": "Bottle",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "onSearch",
+                    "args": [
+                        {
+                            "name": "event",
+                            "type": "Event",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 58,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "event",
+                            "type": "Event",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": true,
+            "imports": [
+                {
+                    "name": "NgClass"
+                },
+                {
+                    "name": "WineCardComponent",
+                    "type": "component"
+                },
+                {
+                    "name": "StatCellComponent",
+                    "type": "component"
+                }
+            ],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, OnInit, inject, signal } from '@angular/core';\nimport { NgClass } from '@angular/common';\nimport { Router } from '@angular/router';\nimport { BottleService } from '../../core/services/bottle.service';\nimport { WineCardComponent } from '../../shared/components/molecules/wine-card/wine-card.component';\nimport { StatCellComponent } from '../../shared/components/molecules/stat-cell/stat-cell.component';\nimport { Bottle, WineType } from '../../shared/models/bottle.model';\n\n@Component({\n  selector: 'app-wine-list',\n  standalone: true,\n  imports: [NgClass, WineCardComponent, StatCellComponent],\n  templateUrl: './wine-list.component.html',\n  styleUrl: './wine-list.component.scss'\n})\nexport class WineListComponent implements OnInit {\n  private bottleService = inject(BottleService);\n  private router = inject(Router);\n\n  bottles = signal<Bottle[]>([]);\n  filteredBottles = signal<Bottle[]>([]);\n  selectedType = signal<WineType | null>(null);\n  searchQuery = signal('');\n\n  readonly types: { value: WineType; label: string }[] = [\n    { value: 'RED', label: 'Rouge' },\n    { value: 'WHITE', label: 'Blanc' },\n    { value: 'PINK', label: 'Rosé' },\n    { value: 'SPARKLING', label: 'Pétillant' },\n    { value: 'CHAMPAGNE', label: 'Champagne' },\n    { value: 'SWEET', label: 'Liquoreux' },\n  ];\n\n  ngOnInit() {\n    this.bottleService.getAll().subscribe(bottles => {\n      this.bottles.set(bottles);\n      this.filteredBottles.set(bottles);\n    });\n  }\n\n  get totalBottles(): number {\n    return this.bottles().reduce((sum, b) => sum + b.quantity, 0);\n  }\n\n  get totalAppellations(): number {\n    return new Set(this.bottles().map(b => b.appellation)).size;\n  }\n\n  get totalVintages(): number {\n    return new Set(this.bottles().map(b => b.vintage)).size;\n  }\n\n  filterByType(type: WineType | null) {\n    this.selectedType.set(type);\n    this.applyFilters();\n  }\n\n  onSearch(event: Event) {\n    this.searchQuery.set((event.target as HTMLInputElement).value);\n    this.applyFilters();\n  }\n\n  private applyFilters() {\n    let result = this.bottles();\n    if (this.selectedType()) {\n      result = result.filter(b => b.type === this.selectedType());\n    }\n    if (this.searchQuery()) {\n      const q = this.searchQuery().toLowerCase();\n      result = result.filter(b =>\n        b.name.toLowerCase().includes(q) ||\n        b.appellation.toLowerCase().includes(q)\n      );\n    }\n    this.filteredBottles.set(result);\n  }\n\n  onCardClick(bottle: Bottle) {\n    this.router.navigate(['/bottles', bottle.id]);\n  }\n\n  onAddClick() {\n    this.router.navigate(['/bottles/new']);\n  }\n}\n",
+            "styleUrl": "./wine-list.component.scss",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "extends": [],
+            "implements": [
+                "OnInit"
+            ],
+            "accessors": {
+                "totalBottles": {
+                    "name": "totalBottles",
+                    "getSignature": {
+                        "name": "totalBottles",
+                        "type": "number",
+                        "returnType": "number",
+                        "line": 41
+                    }
+                },
+                "totalAppellations": {
+                    "name": "totalAppellations",
+                    "getSignature": {
+                        "name": "totalAppellations",
+                        "type": "number",
+                        "returnType": "number",
+                        "line": 45
+                    }
+                },
+                "totalVintages": {
+                    "name": "totalVintages",
+                    "getSignature": {
+                        "name": "totalVintages",
+                        "type": "number",
+                        "returnType": "number",
+                        "line": 49
+                    }
+                }
+            },
+            "templateData": "<div class=\"wine-list\">\n\n  <!-- Hero -->\n  <div class=\"hero\">\n    <div class=\"hero-left\">\n      <div class=\"hero-eyebrow\">Cave personnelle</div>\n      <h1 class=\"hero-title\">Ma <span>collection</span></h1>\n    </div>\n    <div class=\"hero-stats\">\n      <app-stat-cell label=\"Bouteilles\" [value]=\"totalBottles.toString()\" color=\"#C4522A\" [border]=\"true\" />\n      <app-stat-cell label=\"Appellations\" [value]=\"totalAppellations.toString()\" color=\"#3D7A58\" [border]=\"true\" />\n      <app-stat-cell label=\"Millésimes\" [value]=\"totalVintages.toString()\" color=\"#A67C2E\" />\n    </div>\n  </div>\n\n  <!-- Toolbar -->\n  <div class=\"toolbar\">\n    <div class=\"filters\">\n      <button class=\"filter-pill\" [class.active]=\"selectedType() === null\" (click)=\"filterByType(null)\">Tous</button>\n      @for (t of types; track t.value) {\n        <button\n          class=\"filter-pill\"\n          [class.active]=\"selectedType() === t.value\"\n          [ngClass]=\"t.value.toLowerCase()\"\n          (click)=\"filterByType(t.value)\">\n          {{ t.label }}\n        </button>\n      }\n    </div>\n    <div class=\"search-wrapper\">\n      <svg width=\"13\" height=\"13\" viewBox=\"0 0 13 13\" fill=\"none\">\n        <circle cx=\"5.5\" cy=\"5.5\" r=\"4.5\" stroke=\"#A89880\" stroke-width=\"1.2\"/>\n        <path d=\"M9 9l2.5 2.5\" stroke=\"#A89880\" stroke-width=\"1.2\" stroke-linecap=\"round\"/>\n      </svg>\n      <input class=\"search\" placeholder=\"Rechercher un vin…\" (input)=\"onSearch($event)\" />\n    </div>\n  </div>\n\n  <!-- Grid -->\n  <div class=\"grid-section\">\n    <div class=\"grid\">\n      @for (bottle of filteredBottles(); track bottle.id) {\n        <app-wine-card [bottle]=\"bottle\" (clicked)=\"onCardClick($event)\" />\n      }\n      <div class=\"add-card\" (click)=\"onAddClick()\">\n        <div class=\"add-icon\">+</div>\n        <span class=\"add-label\">Ajouter un vin</span>\n      </div>\n    </div>\n  </div>\n\n</div>\n"
         },
         {
             "name": "WineTypeBadgeComponent",
-            "id": "component-WineTypeBadgeComponent-628e361d6e203006b953e4161e3723bba94358e8faa13b1e65177991c02daf8af8394fd31b8de2734c60c97664c650694fc2fdaf13a59c2c6676951d6876cdda",
+            "id": "component-WineTypeBadgeComponent-bae6454e6200253c1280680a658049119ba49e54f0c1226e1c7032a729b411b871e2136963714333a42d3b6c1c4038ae4e17edfbad80fbf97aeecd33ad920736",
             "file": "src/app/shared/components/atoms/wine-type-badge/wine-type-badge.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1663,27 +2887,52 @@
                     "name": "type",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 13,
                     "type": "WineType",
-                    "decorators": []
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 11,
+                    "required": true
                 }
             ],
             "outputsClass": [],
             "propertiesClass": [
                 {
                     "name": "config",
-                    "defaultValue": "{\n    RED:       { label: 'Rouge',     css: 'rouge' },\n    WHITE:     { label: 'Blanc',     css: 'blanc' },\n    PINK:      { label: 'Rosé',      css: 'pink' },\n    SPARKLING: { label: 'Pétillant', css: 'petillant' },\n    CHAMPAGNE: { label: 'Champagne', css: 'champagne' },\n    MUTED:     { label: 'Liquoreux', css: 'liquoreux' },\n  }",
+                    "defaultValue": "{\n    RED:       { label: 'Rouge',     css: 'rouge' },\n    WHITE:     { label: 'Blanc',     css: 'blanc' },\n    PINK:      { label: 'Rosé',      css: 'pink' },\n    SPARKLING: { label: 'Pétillant', css: 'petillant' },\n    CHAMPAGNE: { label: 'Champagne', css: 'champagne' },\n    SWEET:     { label: 'Liquoreux', css: 'liquoreux' },\n  }",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Record<WineType | literal type>",
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 15,
+                    "line": 13,
                     "modifierKind": [
                         123,
                         148
                     ]
+                },
+                {
+                    "name": "cssClass",
+                    "defaultValue": "computed(() => this.config[this.type()]?.css ?? '')",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 23
+                },
+                {
+                    "name": "label",
+                    "defaultValue": "computed(() => this.config[this.type()]?.label ?? this.type())",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 22
                 }
             ],
             "methodsClass": [],
@@ -1692,42 +2941,17 @@
             "hostBindings": [],
             "hostListeners": [],
             "standalone": true,
-            "imports": [
-                {
-                    "name": "CommonModule",
-                    "type": "module"
-                }
-            ],
+            "imports": [],
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, Input } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { WineType } from '../../../models/bottle.model';\n\n@Component({\n  selector: 'app-wine-type-badge',\n  standalone: true,\n  imports: [CommonModule],\n  templateUrl: './wine-type-badge.component.html',\n  styleUrl: './wine-type-badge.component.scss'\n})\nexport class WineTypeBadgeComponent {\n  @Input() type!: WineType;\n\n  private readonly config: Record<WineType, { label: string; css: string }> = {\n    RED:       { label: 'Rouge',     css: 'rouge' },\n    WHITE:     { label: 'Blanc',     css: 'blanc' },\n    PINK:      { label: 'Rosé',      css: 'pink' },\n    SPARKLING: { label: 'Pétillant', css: 'petillant' },\n    CHAMPAGNE: { label: 'Champagne', css: 'champagne' },\n    MUTED:     { label: 'Liquoreux', css: 'liquoreux' },\n  };\n\n  get label(): string { return this.config[this.type]?.label ?? this.type; }\n  get cssClass(): string { return this.config[this.type]?.css ?? ''; }\n}\n",
+            "sourceCode": "import { Component, input, computed } from '@angular/core';\nimport { WineType } from '../../../models/bottle.model';\n\n@Component({\n  selector: 'app-wine-type-badge',\n  standalone: true,\n  templateUrl: './wine-type-badge.component.html',\n  styleUrl: './wine-type-badge.component.scss'\n})\nexport class WineTypeBadgeComponent {\n  type = input.required<WineType>();\n\n  private readonly config: Record<WineType, { label: string; css: string }> = {\n    RED:       { label: 'Rouge',     css: 'rouge' },\n    WHITE:     { label: 'Blanc',     css: 'blanc' },\n    PINK:      { label: 'Rosé',      css: 'pink' },\n    SPARKLING: { label: 'Pétillant', css: 'petillant' },\n    CHAMPAGNE: { label: 'Champagne', css: 'champagne' },\n    SWEET:     { label: 'Liquoreux', css: 'liquoreux' },\n  };\n\n  label = computed(() => this.config[this.type()]?.label ?? this.type());\n  cssClass = computed(() => this.config[this.type()]?.css ?? '');\n}\n",
             "styleUrl": "./wine-type-badge.component.scss",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
             "extends": [],
-            "accessors": {
-                "label": {
-                    "name": "label",
-                    "getSignature": {
-                        "name": "label",
-                        "type": "string",
-                        "returnType": "string",
-                        "line": 24
-                    }
-                },
-                "cssClass": {
-                    "name": "cssClass",
-                    "getSignature": {
-                        "name": "cssClass",
-                        "type": "string",
-                        "returnType": "string",
-                        "line": 25
-                    }
-                }
-            },
-            "templateData": "<span class=\"badge\" [ngClass]=\"cssClass\">{{ label }}</span>\n"
+            "templateData": "<span class=\"badge\" [class]=\"cssClass()\">{{ label() }}</span>\n"
         }
     ],
     "modules": [],
@@ -1761,7 +2985,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "ApplicationConfig",
-                "defaultValue": "{\n  providers: [\n    provideZoneChangeDetection({ eventCoalescing: true }),\n    provideRouter(routes, withComponentInputBinding()),\n    provideHttpClient(withInterceptors([apiInterceptor])),\n    provideAnimations(),\n  ]\n}"
+                "defaultValue": "{\n  providers: [\n    provideZoneChangeDetection({ eventCoalescing: true }),\n    provideRouter(routes, withComponentInputBinding()),\n    provideHttpClient(withInterceptors([apiInterceptor]), withFetch()),\n    provideAnimations(),\n  ]\n}"
             },
             {
                 "name": "bootstrap",
@@ -1824,6 +3048,16 @@
                 "defaultValue": "join(serverDistFolder, 'index.server.html')"
             },
             {
+                "name": "routes",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/app.routes.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Routes",
+                "defaultValue": "[\n  {\n    path: '',\n    loadComponent: () => \"import('./shared/components/layout/app-layout/app-layout.component')\\n\\\n      .then(m => m.AppLayoutComponent)\",\n    children: [\n      { path: '', redirectTo: 'bottles', pathMatch: 'full' },\n      {\n        path: 'bottles',\n        loadComponent: () => \"import('./features/wine-list/wine-list.component')\\n\\\n          .then(m => m.WineListComponent)\"\n      },\n      {\n        path: 'bottles/new',\n        loadComponent: () => \"import('./features/wine-form/wine-form.component')\\n\\\n          .then(m => m.WineFormComponent)\"\n      },\n      {\n        path: 'bottles/:id',\n        loadComponent: () => \"import('./features/wine-detail/wine-detail.component')\\n\\\n          .then(m => m.WineDetailComponent)\"\n      },\n      {\n        path: 'bottles/:id/edit',\n        loadComponent: () => \"import('./features/wine-form/wine-form.component')\\n\\\n          .then(m => m.WineFormComponent)\"\n      },\n    ]\n  },\n  { path: '**', redirectTo: 'bottles' }\n]"
+            },
+            {
                 "name": "serverConfig",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -1842,6 +3076,26 @@
                 "deprecationMessage": "",
                 "type": "unknown",
                 "defaultValue": "dirname(fileURLToPath(import.meta.url))"
+            },
+            {
+                "name": "WINE_REGION_LABELS",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/models/wine-region.model.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Record<WineRegion, string>",
+                "defaultValue": "{\n  [WineRegion.BORDEAUX_LEFT_BANK]:    'Bordeaux Rive Gauche',\n  [WineRegion.BORDEAUX_RIGHT_BANK]:   'Bordeaux Rive Droite',\n  [WineRegion.BORDEAUX_SAUTERNES]:    'Bordeaux Sauternes',\n  [WineRegion.BURGUNDY_COTE_DE_NUITS]:'Bourgogne Côte de Nuits',\n  [WineRegion.BURGUNDY_COTE_DE_BEAUNE]:'Bourgogne Côte de Beaune',\n  [WineRegion.BURGUNDY_WHITE]:        'Bourgogne Blanc',\n  [WineRegion.BURGUNDY_BEAUJOLAIS]:   'Beaujolais',\n  [WineRegion.CHAMPAGNE]:             'Champagne',\n  [WineRegion.ALSACE]:                'Alsace',\n  [WineRegion.RHONE_NORTH]:           'Rhône Nord',\n  [WineRegion.RHONE_SOUTH]:           'Rhône Sud',\n  [WineRegion.LOIRE_WHITE]:           'Loire Blanc',\n  [WineRegion.LOIRE_RED]:             'Loire Rouge',\n  [WineRegion.LANGUEDOC_ROUSSILLON]:  'Languedoc-Roussillon',\n  [WineRegion.JURA]:                  'Jura',\n  [WineRegion.RIOJA]:                 'Rioja',\n  [WineRegion.RIBERA_DEL_DUERO]:      'Ribera del Duero',\n  [WineRegion.BAROLO]:                'Barolo',\n  [WineRegion.BARBARESCO]:            'Barbaresco',\n  [WineRegion.TUSCANY]:               'Toscane',\n  [WineRegion.OTHER]:                 'Autre',\n}"
+            },
+            {
+                "name": "WINE_REGION_OPTIONS",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/models/wine-region.model.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "unknown",
+                "defaultValue": "Object.values(WineRegion).map(value => ({\n  value,\n  label: WINE_REGION_LABELS[value],\n}))"
             }
         ],
         "functions": [],
@@ -1869,10 +3123,32 @@
                 "kind": 193
             },
             {
+                "name": "DrinkingStatus",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "\"not-ready\" | \"ready\" | \"past-peak\" | \"unknown\"",
+                "file": "src/app/core/services/vintage-maturity.service.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 193
+            },
+            {
+                "name": "VintageMaturity",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "\"T\" | \"E\" | \"R\" | \"I\" | \"C\" | \"NT\"",
+                "file": "src/app/core/services/vintage-maturity.service.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 193
+            },
+            {
                 "name": "WineType",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "\"RED\" | \"WHITE\" | \"PINK\" | \"SPARKLING\" | \"CHAMPAGNE\" | \"MUTED\"",
+                "rawtype": "\"RED\" | \"WHITE\" | \"PINK\" | \"SPARKLING\" | \"CHAMPAGNE\" | \"SWEET\"",
                 "file": "src/app/shared/models/bottle.model.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -1880,7 +3156,145 @@
                 "kind": 193
             }
         ],
-        "enumerations": [],
+        "enumerations": [
+            {
+                "name": "WineRegion",
+                "childs": [
+                    {
+                        "name": "BORDEAUX_LEFT_BANK",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "BORDEAUX_LEFT_BANK"
+                    },
+                    {
+                        "name": "BORDEAUX_RIGHT_BANK",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "BORDEAUX_RIGHT_BANK"
+                    },
+                    {
+                        "name": "BORDEAUX_SAUTERNES",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "BORDEAUX_SAUTERNES"
+                    },
+                    {
+                        "name": "BURGUNDY_COTE_DE_NUITS",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "BURGUNDY_COTE_DE_NUITS"
+                    },
+                    {
+                        "name": "BURGUNDY_COTE_DE_BEAUNE",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "BURGUNDY_COTE_DE_BEAUNE"
+                    },
+                    {
+                        "name": "BURGUNDY_WHITE",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "BURGUNDY_WHITE"
+                    },
+                    {
+                        "name": "BURGUNDY_BEAUJOLAIS",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "BURGUNDY_BEAUJOLAIS"
+                    },
+                    {
+                        "name": "CHAMPAGNE",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "CHAMPAGNE"
+                    },
+                    {
+                        "name": "ALSACE",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "ALSACE"
+                    },
+                    {
+                        "name": "RHONE_NORTH",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "RHONE_NORTH"
+                    },
+                    {
+                        "name": "RHONE_SOUTH",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "RHONE_SOUTH"
+                    },
+                    {
+                        "name": "LOIRE_WHITE",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "LOIRE_WHITE"
+                    },
+                    {
+                        "name": "LOIRE_RED",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "LOIRE_RED"
+                    },
+                    {
+                        "name": "LANGUEDOC_ROUSSILLON",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "LANGUEDOC_ROUSSILLON"
+                    },
+                    {
+                        "name": "JURA",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "JURA"
+                    },
+                    {
+                        "name": "RIOJA",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "RIOJA"
+                    },
+                    {
+                        "name": "RIBERA_DEL_DUERO",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "RIBERA_DEL_DUERO"
+                    },
+                    {
+                        "name": "BAROLO",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "BAROLO"
+                    },
+                    {
+                        "name": "BARBARESCO",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "BARBARESCO"
+                    },
+                    {
+                        "name": "TUSCANY",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "TUSCANY"
+                    },
+                    {
+                        "name": "OTHER",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "value": "OTHER"
+                    }
+                ],
+                "ctype": "miscellaneous",
+                "subtype": "enum",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "file": "src/app/shared/models/wine-region.model.ts"
+            }
+        ],
         "groupedVariables": {
             "src/app/core/interceptors/api.interceptor.ts": [
                 {
@@ -1955,7 +3369,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "ApplicationConfig",
-                    "defaultValue": "{\n  providers: [\n    provideZoneChangeDetection({ eventCoalescing: true }),\n    provideRouter(routes, withComponentInputBinding()),\n    provideHttpClient(withInterceptors([apiInterceptor])),\n    provideAnimations(),\n  ]\n}"
+                    "defaultValue": "{\n  providers: [\n    provideZoneChangeDetection({ eventCoalescing: true }),\n    provideRouter(routes, withComponentInputBinding()),\n    provideHttpClient(withInterceptors([apiInterceptor]), withFetch()),\n    provideAnimations(),\n  ]\n}"
                 }
             ],
             "src/main.server.ts": [
@@ -2003,10 +3417,184 @@
                     "type": "object",
                     "defaultValue": "{\n  production: false,\n  apiUrl: 'http://localhost:8080/api'\n}"
                 }
+            ],
+            "src/app/app.routes.ts": [
+                {
+                    "name": "routes",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/app.routes.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Routes",
+                    "defaultValue": "[\n  {\n    path: '',\n    loadComponent: () => \"import('./shared/components/layout/app-layout/app-layout.component')\\n\\\n      .then(m => m.AppLayoutComponent)\",\n    children: [\n      { path: '', redirectTo: 'bottles', pathMatch: 'full' },\n      {\n        path: 'bottles',\n        loadComponent: () => \"import('./features/wine-list/wine-list.component')\\n\\\n          .then(m => m.WineListComponent)\"\n      },\n      {\n        path: 'bottles/new',\n        loadComponent: () => \"import('./features/wine-form/wine-form.component')\\n\\\n          .then(m => m.WineFormComponent)\"\n      },\n      {\n        path: 'bottles/:id',\n        loadComponent: () => \"import('./features/wine-detail/wine-detail.component')\\n\\\n          .then(m => m.WineDetailComponent)\"\n      },\n      {\n        path: 'bottles/:id/edit',\n        loadComponent: () => \"import('./features/wine-form/wine-form.component')\\n\\\n          .then(m => m.WineFormComponent)\"\n      },\n    ]\n  },\n  { path: '**', redirectTo: 'bottles' }\n]"
+                }
+            ],
+            "src/app/shared/models/wine-region.model.ts": [
+                {
+                    "name": "WINE_REGION_LABELS",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/models/wine-region.model.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Record<WineRegion, string>",
+                    "defaultValue": "{\n  [WineRegion.BORDEAUX_LEFT_BANK]:    'Bordeaux Rive Gauche',\n  [WineRegion.BORDEAUX_RIGHT_BANK]:   'Bordeaux Rive Droite',\n  [WineRegion.BORDEAUX_SAUTERNES]:    'Bordeaux Sauternes',\n  [WineRegion.BURGUNDY_COTE_DE_NUITS]:'Bourgogne Côte de Nuits',\n  [WineRegion.BURGUNDY_COTE_DE_BEAUNE]:'Bourgogne Côte de Beaune',\n  [WineRegion.BURGUNDY_WHITE]:        'Bourgogne Blanc',\n  [WineRegion.BURGUNDY_BEAUJOLAIS]:   'Beaujolais',\n  [WineRegion.CHAMPAGNE]:             'Champagne',\n  [WineRegion.ALSACE]:                'Alsace',\n  [WineRegion.RHONE_NORTH]:           'Rhône Nord',\n  [WineRegion.RHONE_SOUTH]:           'Rhône Sud',\n  [WineRegion.LOIRE_WHITE]:           'Loire Blanc',\n  [WineRegion.LOIRE_RED]:             'Loire Rouge',\n  [WineRegion.LANGUEDOC_ROUSSILLON]:  'Languedoc-Roussillon',\n  [WineRegion.JURA]:                  'Jura',\n  [WineRegion.RIOJA]:                 'Rioja',\n  [WineRegion.RIBERA_DEL_DUERO]:      'Ribera del Duero',\n  [WineRegion.BAROLO]:                'Barolo',\n  [WineRegion.BARBARESCO]:            'Barbaresco',\n  [WineRegion.TUSCANY]:               'Toscane',\n  [WineRegion.OTHER]:                 'Autre',\n}"
+                },
+                {
+                    "name": "WINE_REGION_OPTIONS",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/models/wine-region.model.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "defaultValue": "Object.values(WineRegion).map(value => ({\n  value,\n  label: WINE_REGION_LABELS[value],\n}))"
+                }
             ]
         },
         "groupedFunctions": {},
-        "groupedEnumerations": {},
+        "groupedEnumerations": {
+            "src/app/shared/models/wine-region.model.ts": [
+                {
+                    "name": "WineRegion",
+                    "childs": [
+                        {
+                            "name": "BORDEAUX_LEFT_BANK",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "BORDEAUX_LEFT_BANK"
+                        },
+                        {
+                            "name": "BORDEAUX_RIGHT_BANK",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "BORDEAUX_RIGHT_BANK"
+                        },
+                        {
+                            "name": "BORDEAUX_SAUTERNES",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "BORDEAUX_SAUTERNES"
+                        },
+                        {
+                            "name": "BURGUNDY_COTE_DE_NUITS",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "BURGUNDY_COTE_DE_NUITS"
+                        },
+                        {
+                            "name": "BURGUNDY_COTE_DE_BEAUNE",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "BURGUNDY_COTE_DE_BEAUNE"
+                        },
+                        {
+                            "name": "BURGUNDY_WHITE",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "BURGUNDY_WHITE"
+                        },
+                        {
+                            "name": "BURGUNDY_BEAUJOLAIS",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "BURGUNDY_BEAUJOLAIS"
+                        },
+                        {
+                            "name": "CHAMPAGNE",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "CHAMPAGNE"
+                        },
+                        {
+                            "name": "ALSACE",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "ALSACE"
+                        },
+                        {
+                            "name": "RHONE_NORTH",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "RHONE_NORTH"
+                        },
+                        {
+                            "name": "RHONE_SOUTH",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "RHONE_SOUTH"
+                        },
+                        {
+                            "name": "LOIRE_WHITE",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "LOIRE_WHITE"
+                        },
+                        {
+                            "name": "LOIRE_RED",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "LOIRE_RED"
+                        },
+                        {
+                            "name": "LANGUEDOC_ROUSSILLON",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "LANGUEDOC_ROUSSILLON"
+                        },
+                        {
+                            "name": "JURA",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "JURA"
+                        },
+                        {
+                            "name": "RIOJA",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "RIOJA"
+                        },
+                        {
+                            "name": "RIBERA_DEL_DUERO",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "RIBERA_DEL_DUERO"
+                        },
+                        {
+                            "name": "BAROLO",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "BAROLO"
+                        },
+                        {
+                            "name": "BARBARESCO",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "BARBARESCO"
+                        },
+                        {
+                            "name": "TUSCANY",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "TUSCANY"
+                        },
+                        {
+                            "name": "OTHER",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "value": "OTHER"
+                        }
+                    ],
+                    "ctype": "miscellaneous",
+                    "subtype": "enum",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "file": "src/app/shared/models/wine-region.model.ts"
+                }
+            ]
+        },
         "groupedTypeAliases": {
             "src/app/shared/components/atoms/button/button.component.ts": [
                 {
@@ -2032,12 +3620,36 @@
                     "kind": 193
                 }
             ],
+            "src/app/core/services/vintage-maturity.service.ts": [
+                {
+                    "name": "DrinkingStatus",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "\"not-ready\" | \"ready\" | \"past-peak\" | \"unknown\"",
+                    "file": "src/app/core/services/vintage-maturity.service.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 193
+                },
+                {
+                    "name": "VintageMaturity",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "\"T\" | \"E\" | \"R\" | \"I\" | \"C\" | \"NT\"",
+                    "file": "src/app/core/services/vintage-maturity.service.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 193
+                }
+            ],
             "src/app/shared/models/bottle.model.ts": [
                 {
                     "name": "WineType",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "\"RED\" | \"WHITE\" | \"PINK\" | \"SPARKLING\" | \"CHAMPAGNE\" | \"MUTED\"",
+                    "rawtype": "\"RED\" | \"WHITE\" | \"PINK\" | \"SPARKLING\" | \"CHAMPAGNE\" | \"SWEET\"",
                     "file": "src/app/shared/models/bottle.model.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
@@ -2050,7 +3662,43 @@
     "routes": {
         "name": "<root>",
         "kind": "module",
-        "children": []
+        "children": [
+            {
+                "name": "bottles",
+                "kind": "route-path",
+                "filename": "src/app/app.routes.ts"
+            },
+            {
+                "name": "bottles/new",
+                "kind": "route-path",
+                "filename": "src/app/app.routes.ts"
+            },
+            {
+                "name": "bottles/:id",
+                "kind": "route-path",
+                "filename": "src/app/app.routes.ts"
+            },
+            {
+                "name": "bottles/:id/edit",
+                "kind": "route-path",
+                "filename": "src/app/app.routes.ts"
+            },
+            {
+                "name": "**",
+                "kind": "route-path",
+                "filename": "src/app/app.routes.ts"
+            },
+            {
+                "name": "bottles",
+                "kind": "route-redirect",
+                "filename": "src/app/app.routes.ts"
+            },
+            {
+                "name": "bottles",
+                "kind": "route-redirect",
+                "filename": "src/app/app.routes.ts"
+            }
+        ]
     },
     "coverage": {
         "count": 0,
@@ -2062,7 +3710,7 @@
                 "linktype": "component",
                 "name": "AppComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/2",
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {
@@ -2096,6 +3744,16 @@
                 "status": "low"
             },
             {
+                "filePath": "src/app/app.routes.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "routes",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "src/app/core/interceptors/api.interceptor.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
@@ -2115,6 +3773,53 @@
                 "status": "low"
             },
             {
+                "filePath": "src/app/core/services/vintage-maturity.service.ts",
+                "type": "injectable",
+                "linktype": "injectable",
+                "name": "VintageChartService",
+                "coveragePercent": 0,
+                "coverageCount": "0/6",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/core/services/vintage-maturity.service.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "VintageInfo",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/core/services/vintage-maturity.service.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "VintageStatus",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/core/services/vintage-maturity.service.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "DrinkingStatus",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/core/services/vintage-maturity.service.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "VintageMaturity",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "src/app/environment/environment.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
@@ -2122,6 +3827,33 @@
                 "name": "environment",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/features/wine-detail/wine-detail.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "WineDetailComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/9",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/features/wine-form/wine-form.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "WineFormComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/16",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/features/wine-list/wine-list.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "WineListComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/14",
                 "status": "low"
             },
             {
@@ -2195,7 +3927,16 @@
                 "linktype": "component",
                 "name": "WineTypeBadgeComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/3",
+                "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/layout/app-layout/app-layout.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "AppLayoutComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {
@@ -2214,6 +3955,15 @@
                 "name": "HeaderComponent",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/molecules/peak-window/peak-window.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "PeakWindowComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/7",
                 "status": "low"
             },
             {
@@ -2244,12 +3994,21 @@
                 "status": "low"
             },
             {
+                "filePath": "src/app/shared/components/molecules/wine-hero-card/wine-hero-card.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "WineHeroCardComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/2",
+                "status": "low"
+            },
+            {
                 "filePath": "src/app/shared/models/bottle.model.ts",
                 "type": "interface",
                 "linktype": "interface",
                 "name": "Bottle",
                 "coveragePercent": 0,
-                "coverageCount": "0/8",
+                "coverageCount": "0/12",
                 "status": "low"
             },
             {
@@ -2258,6 +4017,26 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "typealias",
                 "name": "WineType",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/models/wine-region.model.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WINE_REGION_LABELS",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/models/wine-region.model.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "WINE_REGION_OPTIONS",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

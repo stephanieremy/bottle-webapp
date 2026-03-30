@@ -28,7 +28,7 @@ export class WineListComponent implements OnInit {
     { value: 'PINK', label: 'Rosé' },
     { value: 'SPARKLING', label: 'Pétillant' },
     { value: 'CHAMPAGNE', label: 'Champagne' },
-    { value: 'MUTED', label: 'Liquoreux' },
+    { value: 'SWEET', label: 'Liquoreux' },
   ];
 
   ngOnInit() {
@@ -43,7 +43,7 @@ export class WineListComponent implements OnInit {
   }
 
   get totalAppellations(): number {
-    return new Set(this.bottles().map(b => b.designation)).size;
+    return new Set(this.bottles().map(b => b.appellation)).size;
   }
 
   get totalVintages(): number {
@@ -69,7 +69,7 @@ export class WineListComponent implements OnInit {
       const q = this.searchQuery().toLowerCase();
       result = result.filter(b =>
         b.name.toLowerCase().includes(q) ||
-        b.designation.toLowerCase().includes(q)
+        b.appellation.toLowerCase().includes(q)
       );
     }
     this.filteredBottles.set(result);

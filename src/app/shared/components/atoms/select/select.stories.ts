@@ -16,9 +16,9 @@ export const Default: Story = {
     options: [
       { value: 'RED', label: 'Rouge' },
       { value: 'WHITE', label: 'Blanc' },
-      { value: 'ROSE', label: 'Rosé' },
+      { value: 'PINK', label: 'Rosé' },
       { value: 'SPARKLING', label: 'Pétillant' },
-      { value: 'MUTED', label: 'Muté' },
+      { value: 'SWEET', label: 'Liquoreux' },
     ],
   },
 };

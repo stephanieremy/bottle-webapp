@@ -1,0 +1,164 @@
+@use 'styles/variables' as *;
+
+.wine-form {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 3rem 2.5rem;
+}
+
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.back {
+  display: inline-block;
+  font-size: 0.8125rem;
+  color: $color-ink-light;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.15s;
+
+  &:hover { color: $color-terracotta; }
+}
+
+.page-title {
+  font-family: $font-display;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: $color-ink;
+
+  span { color: $color-terracotta; }
+}
+
+.form-card {
+  background: $color-surface;
+  border-radius: $radius-lg;
+  border: 0.5px solid $color-border;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-family: $font-body;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: $color-ink-light;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.required { color: $color-terracotta; }
+
+// Type pills
+.type-pills {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.type-pill {
+  border-radius: $radius-sm;
+  padding: 0.5rem 1rem;
+  font-size: 0.8125rem;
+  font-family: $font-body;
+  cursor: pointer;
+  border: 1.5px solid $color-border;
+  background: $color-bg;
+  color: $color-ink-mid;
+  transition: all 0.15s;
+
+  &:hover { border-color: $color-border-strong; }
+
+  &.pill-red      { background: #E8C4AD; color: #8A2A10; border-color: #8A2A10; font-weight: 500; }
+  &.pill-white    { background: #EDE0B0; color: #7A5A10; border-color: #7A5A10; font-weight: 500; }
+  &.pill-pink     { background: #F0D0D8; color: #8A2848; border-color: #8A2848; font-weight: 500; }
+  &.pill-sparkling{ background: #C4E0D0; color: #3D7A58; border-color: #3D7A58; font-weight: 500; }
+  &.pill-champagne{ background: #D0D6F5; color: #3D4F9E; border-color: #3D4F9E; font-weight: 500; }
+  &.pill-sweet    { background: #F0D8A8; color: #7A4A08; border-color: #7A4A08; font-weight: 500; }
+}
+
+// Quantité
+.qty-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: 2.875rem;
+}
+
+.qty-btn {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  border: 1.5px solid $color-border;
+  background: $color-bg;
+  color: $color-ink-mid;
+  font-size: 1.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  font-family: $font-body;
+
+  &:hover { border-color: $color-terracotta; color: $color-terracotta; }
+}
+
+.qty-value {
+  font-family: $font-display;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: $color-ink;
+  min-width: 2rem;
+  text-align: center;
+}
+
+.price-wrapper {
+  position: relative;
+  app-input input {
+    padding-left: 1.75rem !important;
+  }
+}
+
+.price-symbol {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: $color-ink-light;
+  font-size: 0.9375rem;
+  font-family: $font-body;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.divider {
+  height: 0.5px;
+  background: $color-border;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+app-input,
+app-select {
+  display: block;
+  width: 100%;
+}

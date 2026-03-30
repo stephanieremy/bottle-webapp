@@ -31,7 +31,7 @@ $wine-types: (
   "rouge":     ("#E8C4AD", "#8A2A10"),
   "blanc":     ("#EDE0B0", "#7A5A10"),
   "liquoreux": ("#F0D8A8", "#7A4A08"),
-  "rose":      ("#F0D0D8", "#8A2848"),
+  "pink":      ("#F0D0D8", "#8A2848"),
   "champagne": ("#D0D6F5", "#3D4F9E"),
   "petillant": ("#C4E0D0", "#3D7A58"),
 );
@@ -46,19 +46,19 @@ $font-notes:   'Cormorant Garamond', serif;
 // ─────────────────────────────────────────────
 //  SPACING
 // ─────────────────────────────────────────────
-$spacing-xs:  4px;
-$spacing-sm:  8px;
-$spacing-md:  16px;
-$spacing-lg:  24px;
-$spacing-xl:  32px;
-$spacing-xxl: 48px;
+$spacing-xs:  0.25rem;  // 4px
+$spacing-sm:  0.5rem;   // 8px
+$spacing-md:  1rem;     // 16px
+$spacing-lg:  1.5rem;   // 24px
+$spacing-xl:  2rem;     // 32px
+$spacing-xxl: 3rem;     // 48px
 
 // ─────────────────────────────────────────────
 //  BORDERS & SHADOWS
 // ─────────────────────────────────────────────
 $radius-sm:  9999px;
-$radius-md:  12px;
-$radius-lg:  16px;
+$radius-md:  0.75rem;   // 12px
+$radius-lg:  1rem;      // 16px
 
-$shadow-card:     0 2px 10px rgba(196, 82, 42, 0.3);
-$shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.1);
+$shadow-card:     0 0.125rem 0.625rem rgba(196, 82, 42, 0.3);
+$shadow-elevated: 0 0.5rem 2rem rgba(0, 0, 0, 0.1);

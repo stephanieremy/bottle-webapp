@@ -1,7 +1,7 @@
 @use 'styles/variables' as *;
 
 .stat-cell {
-  padding: 18px 14px;
+  padding: 1.125rem 0.875rem;
   text-align: center;
 
   &.border {
@@ -12,18 +12,18 @@
 .value {
   font-family: $font-display;
   font-weight: 800;
-  font-size: 24px;
+  font-size: 1.5rem;
   color: $color-ink;
   line-height: 1.2;
 
-  &.small { font-size: 13px; }
+  &.small { font-size: 0.8125rem; }
 }
 
 .label {
   font-family: $font-body;
-  font-size: 10px;
+  font-size: 0.625rem;
   color: $color-ink-light;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  margin-top: 4px;
+  margin-top: 0.25rem;
 }
