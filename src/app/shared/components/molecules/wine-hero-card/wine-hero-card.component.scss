@@ -1,0 +1,80 @@
+@use 'styles/variables' as *;
+
+.hero-card {
+  background: $color-surface;
+  border-radius: $radius-lg;
+  border: 0.5px solid $color-border;
+  padding: 2rem;
+  margin-bottom: 1rem;
+}
+
+.hero-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.hero-left {
+  flex: 1;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.vintage {
+  font-family: $font-display;
+  font-size: 1rem;
+  font-weight: 700;
+  color: $color-gold;
+}
+
+.name {
+  font-family: $font-display;
+  font-size: 2rem;
+  font-weight: 700;
+  color: $color-ink;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+}
+
+.designation {
+  font-family: $font-notes;
+  font-style: italic;
+  font-size: 1.0625rem;
+  color: $color-ink-mid;
+}
+
+.score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  margin-left: 2rem;
+}
+
+.score-value {
+  font-family: $font-display;
+  font-weight: 900;
+  font-size: 3.5rem;
+  color: $color-gold;
+  line-height: 1;
+}
+
+.score-label {
+  font-family: $font-body;
+  font-size: 0.625rem;
+  color: $color-ink-light;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-top: 0.5px solid $color-border;
+}
