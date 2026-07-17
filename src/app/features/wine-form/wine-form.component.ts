@@ -68,7 +68,8 @@ export class WineFormComponent {
       ...rest,
       vintage: Number(this.form.value.vintage),
       quantity: this.quantity(),
-      region: this.showCustomRegion() ? customRegion : rest.region,
+      region: this.showCustomRegion() ? WineRegion.OTHER : rest.region,
+      customRegion: this.showCustomRegion() ? customRegion : null,
     };
     this.bottleService.create(payload as any).subscribe(() => {
       this.router.navigate(['/bottles']);

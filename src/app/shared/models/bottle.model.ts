@@ -6,7 +6,8 @@ export interface Bottle {
   id: string;
   name: string;
   appellation: string;
-  region?:  WineRegion | string;
+  region?: WineRegion | string;
+  customRegion?: string;
   vintage: number;
   type: WineType;
   quantity: number;

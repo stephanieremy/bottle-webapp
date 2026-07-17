@@ -16,21 +16,13 @@
         [error]="form.get('name')?.invalid === true && form.get('name')?.touched === true" />
     </div>
 
-    <!-- Appellation + Région -->
-    <div class="form-row">
-      <div class="form-group">
-        <label class="label">Appellation <span class="required">*</span></label>
-        <app-input
-          formControlName="appellation"
-          placeholder="Ex. Margaux"
-          [error]="form.get('appellation')?.invalid === true && form.get('appellation')?.touched === true" />
-      </div>
-      <div class="form-group">
-        <label class="label">Région</label>
-        <app-input
-          formControlName="region"
-          placeholder="Ex. Bordeaux" />
-      </div>
+    <!-- Appellation -->
+    <div class="form-group">
+      <label class="label">Appellation <span class="required">*</span></label>
+      <app-input
+        formControlName="appellation"
+        placeholder="Ex. Margaux"
+        [error]="form.get('appellation')?.invalid === true && form.get('appellation')?.touched === true" />
     </div>
 
     <!-- Millésime -->
@@ -58,6 +50,7 @@
       </div>
     </div>
 
+    <!-- Région -->
     <div class="form-row">
       <div class="form-group">
         <label class="label">Région</label>
