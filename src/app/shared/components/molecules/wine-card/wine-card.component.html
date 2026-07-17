@@ -1,10 +1,21 @@
 <div class="card" (click)="clicked.emit(bottle())">
   <div class="card-top">
     <app-wine-type-badge [type]="bottle().type" />
-    <span class="vintage">{{ bottle().vintage }}</span>
+    <div class="card-top-right">
+      <app-wine-glass-icon [type]="bottle().type" [size]="28" />
+      <span class="vintage">{{ bottle().vintage }}</span>
+    </div>
   </div>
+
   <div class="wine-name">{{ bottle().name }}</div>
-  <div class="appellation">{{ bottle().appellation }}</div>
+
+  <div class="location">
+    <span class="appellation">{{ bottle().appellation }}</span>
+    @if (bottle().region) {
+      <span class="region">{{ bottle().region }}</span>
+    }
+  </div>
+
   <div class="card-bottom">
     <span class="qty">×<span class="qty-value">{{ bottle().quantity }}</span> btl.</span>
   </div>
