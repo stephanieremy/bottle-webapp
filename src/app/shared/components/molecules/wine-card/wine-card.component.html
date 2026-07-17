@@ -11,8 +11,11 @@
 
   <div class="location">
     <span class="appellation">{{ bottle().appellation }}</span>
-    @if (bottle().region) {
-      <span class="region">{{ bottle().region }}</span>
+    @if (regionLabel()) {
+      <span class="region">{{ regionLabel() }}</span>
+    }
+    @if (bottle().customRegion) {
+      <span class="region">{{ bottle().customRegion }}</span>
     }
   </div>
 
