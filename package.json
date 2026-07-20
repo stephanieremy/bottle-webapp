@@ -9,6 +9,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
+    "test:e2e": "playwright test",
     "serve:ssr:vinotheque-webapp": "node dist/vinotheque-webapp/server/server.mjs",
     "storybook": "ng run vinotheque-webapp:storybook",
     "build-storybook": "ng run vinotheque-webapp:build-storybook"
@@ -36,6 +37,7 @@
     "@angular/cli": "^19.2.22",
     "@angular/compiler-cli": "^19.2.0",
     "@compodoc/compodoc": "^1.2.1",
+    "@playwright/test": "^1.61.1",
     "@storybook/addon-a11y": "^10.3.1",
     "@storybook/addon-docs": "^10.3.1",
     "@storybook/addon-onboarding": "^10.3.1",
