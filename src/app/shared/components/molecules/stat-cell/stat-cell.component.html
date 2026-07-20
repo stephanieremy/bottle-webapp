@@ -1,4 +1,6 @@
-<div class="stat-cell" [class.border]="border()">
-  <div class="value" [class.small]="small()" [style.color]="color()">{{ value() }}</div>
-  <div class="label">{{ label() }}</div>
+<div class="text-center py-[1.125rem] px-[0.875rem]" [class.border-r]="border()" [class.border-border]="border()">
+  <div
+    [class]="'font-display font-extrabold leading-[1.2] text-ink ' + (small() ? 'text-[0.8125rem]' : 'text-2xl')"
+    [style.color]="color()">{{ value() }}</div>
+  <div class="font-body text-[0.625rem] text-ink-light uppercase tracking-[0.1em] mt-1 whitespace-nowrap">{{ label() }}</div>
 </div>

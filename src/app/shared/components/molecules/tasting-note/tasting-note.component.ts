@@ -6,7 +6,6 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './tasting-note.component.html',
-  styleUrl: './tasting-note.component.scss'
 })
 export class TastingNoteComponent {
   @Input() note!: string;

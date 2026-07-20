@@ -1,48 +1,50 @@
-<div class="wine-form">
+<div class="max-w-[40rem] mx-auto py-12 px-6 sm:px-10">
 
-  <div class="page-header">
-    <a class="back" routerLink="/bottles">← Ma cave</a>
-    <h1 class="page-title">Ajouter un <span>vin</span></h1>
+  <div class="mb-8">
+    <a class="inline-block text-[0.8125rem] text-ink-light mb-4 cursor-pointer no-underline transition duration-150 hover:text-terracotta" routerLink="/bottles">← Ma cave</a>
+    <h1 class="font-display text-[1.75rem] font-bold text-ink">Ajouter un <span class="text-terracotta">vin</span></h1>
   </div>
 
-  <div class="form-card" [formGroup]="form">
+  <div class="bg-surface rounded-2xl border-[0.5px] border-border p-6 sm:p-8 flex flex-col gap-6" [formGroup]="form">
 
     <!-- Nom du vin -->
-    <div class="form-group">
-      <label class="label">Nom du vin <span class="required">*</span></label>
+    <div class="flex flex-col gap-2">
+      <label class="font-body text-[0.6875rem] font-medium text-ink-light uppercase tracking-[0.1em]">Nom du vin <span class="text-terracotta">*</span></label>
       <app-input
+        class="block w-full"
         formControlName="name"
         placeholder="Ex. Château Margaux"
         [error]="form.get('name')?.invalid === true && form.get('name')?.touched === true" />
     </div>
 
     <!-- Appellation -->
-    <div class="form-group">
-      <label class="label">Appellation <span class="required">*</span></label>
+    <div class="flex flex-col gap-2">
+      <label class="font-body text-[0.6875rem] font-medium text-ink-light uppercase tracking-[0.1em]">Appellation <span class="text-terracotta">*</span></label>
       <app-input
+        class="block w-full"
         formControlName="appellation"
         placeholder="Ex. Margaux"
         [error]="form.get('appellation')?.invalid === true && form.get('appellation')?.touched === true" />
     </div>
 
     <!-- Millésime -->
-    <div class="form-group">
-      <label class="label">Millésime <span class="required">*</span></label>
+    <div class="flex flex-col gap-2">
+      <label class="font-body text-[0.6875rem] font-medium text-ink-light uppercase tracking-[0.1em]">Millésime <span class="text-terracotta">*</span></label>
       <app-select
+        class="block w-full"
         formControlName="vintage"
         placeholder="Sélectionner…"
         [options]="vintages" />
     </div>
 
     <!-- Type de vin -->
-    <div class="form-group">
-      <label class="label">Type de vin <span class="required">*</span></label>
-      <div class="type-pills">
+    <div class="flex flex-col gap-2">
+      <label class="font-body text-[0.6875rem] font-medium text-ink-light uppercase tracking-[0.1em]">Type de vin <span class="text-terracotta">*</span></label>
+      <div class="flex gap-2 flex-wrap">
         @for (t of types; track t.value) {
           <button
             type="button"
-            class="type-pill"
-            [class]="'type-pill' + (form.value.type === t.value ? ' selected pill-' + t.value.toLowerCase() : '')"
+            [class]="typePillClasses(t.value)"
             (click)="selectType(t.value)">
             {{ t.label }}
           </button>
@@ -51,19 +53,21 @@
     </div>
 
     <!-- Région -->
-    <div class="form-row">
-      <div class="form-group">
-        <label class="label">Région</label>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+      <div class="flex flex-col gap-2">
+        <label class="font-body text-[0.6875rem] font-medium text-ink-light uppercase tracking-[0.1em]">Région</label>
         <app-select
+          class="block w-full"
           formControlName="region"
           placeholder="Sélectionner une région"
           [options]="regions"
           (change)="onRegionChange(form.value.region!)" />
       </div>
       @if (showCustomRegion()) {
-        <div class="form-group">
-          <label class="label">Région personnalisée</label>
+        <div class="flex flex-col gap-2">
+          <label class="font-body text-[0.6875rem] font-medium text-ink-light uppercase tracking-[0.1em]">Région personnalisée</label>
           <app-input
+            class="block w-full"
             formControlName="customRegion"
             placeholder="Ex. Priorat" />
         </div>
@@ -71,30 +75,35 @@
     </div>
 
     <!-- Quantité + Prix -->
-    <div class="form-row">
-      <div class="form-group">
-        <label class="label">Quantité <span class="required">*</span></label>
-        <div class="qty-wrapper">
-          <button type="button" class="qty-btn" (click)="decrement()">−</button>
-          <span class="qty-value">{{ quantity() }}</span>
-          <button type="button" class="qty-btn" (click)="increment()">+</button>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+      <div class="flex flex-col gap-2">
+        <label class="font-body text-[0.6875rem] font-medium text-ink-light uppercase tracking-[0.1em]">Quantité <span class="text-terracotta">*</span></label>
+        <div class="flex items-center gap-4 h-[2.875rem]">
+          <button
+            type="button"
+            class="w-9 h-9 rounded-full border-[1.5px] border-border bg-bg text-ink-mid text-xl cursor-pointer flex items-center justify-center transition duration-150 font-body hover:border-terracotta hover:text-terracotta"
+            (click)="decrement()">−</button>
+          <span class="font-display text-[1.75rem] font-bold text-ink min-w-8 text-center">{{ quantity() }}</span>
+          <button
+            type="button"
+            class="w-9 h-9 rounded-full border-[1.5px] border-border bg-bg text-ink-mid text-xl cursor-pointer flex items-center justify-center transition duration-150 font-body hover:border-terracotta hover:text-terracotta"
+            (click)="increment()">+</button>
         </div>
       </div>
-      <div class="form-group">
-        <label class="label">Prix / bouteille</label>
-        <div class="price-wrapper">
-          <app-input
-            formControlName="price"
-            type="number"
-            placeholder="45" />
-        </div>
+      <div class="flex flex-col gap-2">
+        <label class="font-body text-[0.6875rem] font-medium text-ink-light uppercase tracking-[0.1em]">Prix / bouteille</label>
+        <app-input
+          class="block w-full"
+          formControlName="price"
+          type="number"
+          placeholder="45" />
       </div>
     </div>
 
-    <div class="divider"></div>
+    <div class="h-[0.5px] bg-border"></div>
 
     <!-- Actions -->
-    <div class="form-actions">
+    <div class="flex justify-between items-center flex-wrap gap-3">
       <app-button variant="secondary" (clicked)="onCancel()">Annuler</app-button>
       <app-button variant="primary" (clicked)="onSubmit()">Ajouter le vin</app-button>
     </div>

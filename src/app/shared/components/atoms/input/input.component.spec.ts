@@ -64,24 +64,22 @@ describe('InputComponent', () => {
     expect(host.control.value).toBe('Pomerol');
   });
 
-  it('should apply the error class when error is true', () => {
+  it('should apply the error border class when error is true', () => {
     host.error = true;
     fixture.detectChanges();
-    expect(input.classList.contains('error')).toBe(true);
+    expect(input.classList.contains('border-error')).toBe(true);
   });
 
-  it('should not have error class by default', () => {
-    expect(input.classList.contains('error')).toBe(false);
+  it('should not have the error border class by default', () => {
+    expect(input.classList.contains('border-error')).toBe(false);
   });
 
-  it('should apply focused class on focus and remove it on blur', () => {
+  it('should mark the control as touched on focus', () => {
+    expect(host.control.touched).toBe(false);
+
     input.dispatchEvent(new Event('focus'));
     fixture.detectChanges();
-    expect(input.classList.contains('focused')).toBe(true);
-
-    input.dispatchEvent(new Event('blur'));
-    fixture.detectChanges();
-    expect(input.classList.contains('focused')).toBe(false);
+    expect(host.control.touched).toBe(true);
   });
 
   it('should disable the input when formControl is disabled', () => {

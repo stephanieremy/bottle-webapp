@@ -1,10 +1,9 @@
 <select
   [disabled]="disabled"
-  [class.focused]="focused"
-  [class.has-value]="value"
+  [class]="selectClasses"
+  style="background-image: url(&quot;data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 7L11 1' stroke='%23A89880' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E&quot;)"
   (change)="onSelect($event)"
-  (focus)="focused = true; onTouched()"
-  (blur)="focused = false">
+  (focus)="onTouched()">
   <option value="" disabled [selected]="!value">{{ placeholder }}</option>
   @for (opt of options; track opt.value) {
     <option [value]="opt.value">{{ opt.label }}</option>

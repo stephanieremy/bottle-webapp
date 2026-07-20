@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #F5F0E8;
+  --color-bg-alt: #EDE7D9;
+  --color-surface: #FDFAF5;
+  --color-surface-up: #F0E8D8;
+  --color-border: #DDD4C0;
+  --color-border-strong: #C4B89A;
+
+  --color-terracotta: #C4522A;
+  --color-terracotta-muted: #E8C4AD;
+  --color-gold: #A67C2E;
+  --color-gold-muted: #EDE0B0;
+  --color-indigo: #3D4F9E;
+  --color-indigo-muted: #D0D6F5;
+  --color-sage: #3D7A58;
+  --color-sage-muted: #C4E0D0;
+
+  --color-ink: #1E1A14;
+  --color-ink-mid: #6B5F4E;
+  --color-ink-light: #A89880;
+
+  --color-error: #B83020;
+  --color-error-muted: #F5DDD8;
+
+  --color-wine-rouge-bg: #E8C4AD;
+  --color-wine-rouge-text: #8A2A10;
+  --color-wine-blanc-bg: #EDE0B0;
+  --color-wine-blanc-text: #7A5A10;
+  --color-wine-liquoreux-bg: #F0D8A8;
+  --color-wine-liquoreux-text: #7A4A08;
+  --color-wine-pink-bg: #F0D0D8;
+  --color-wine-pink-text: #8A2848;
+  --color-wine-champagne-bg: #D0D6F5;
+  --color-wine-champagne-text: #3D4F9E;
+  --color-wine-petillant-bg: #C4E0D0;
+  --color-wine-petillant-text: #3D7A58;
+
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-notes: 'Cormorant Garamond', serif;
+
+  /* radius-sm/md/lg map onto Tailwind's default rounded-full / rounded-xl / rounded-2xl */
+
+  --shadow-card: 0 0.125rem 0.625rem rgba(196, 82, 42, 0.3);
+  --shadow-card-sage: 0 0.125rem 0.625rem rgba(61, 122, 88, 0.3);
+  --shadow-card-danger: 0 0.125rem 0.625rem rgba(184, 48, 32, 0.3);
+  --shadow-elevated: 0 0.5rem 2rem rgba(0, 0, 0, 0.1);
+}

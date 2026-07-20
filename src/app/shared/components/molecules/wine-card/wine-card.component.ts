@@ -9,7 +9,6 @@ import { WINE_REGION_LABELS, WineRegion } from '../../../models/wine-region.mode
   standalone: true,
   imports: [WineTypeBadgeComponent, WineGlassIconComponent],
   templateUrl: './wine-card.component.html',
-  styleUrl: './wine-card.component.scss',
 })
 export class WineCardComponent {
   bottle = input.required<Bottle>();

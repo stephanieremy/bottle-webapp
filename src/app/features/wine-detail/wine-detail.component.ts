@@ -13,7 +13,6 @@ import {PeakWindowComponent} from '../../shared/components/molecules/peak-window
   standalone: true,
   imports: [RouterModule, WineHeroCardComponent, TastingNoteComponent, ButtonComponent, PeakWindowComponent],
   templateUrl: './wine-detail.component.html',
-  styleUrl: './wine-detail.component.scss'
 })
 export class WineDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);

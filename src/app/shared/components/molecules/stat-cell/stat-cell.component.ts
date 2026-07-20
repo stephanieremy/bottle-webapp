@@ -4,7 +4,7 @@ import { Component, input } from '@angular/core';
   selector: 'app-stat-cell',
   standalone: true,
   templateUrl: './stat-cell.component.html',
-  styleUrl: './stat-cell.component.scss'
+  host: { class: 'shrink-0' },
 })
 export class StatCellComponent {
   label = input.required<string>();

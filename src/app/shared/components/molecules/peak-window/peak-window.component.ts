@@ -5,7 +5,6 @@ import {DrinkingStatus, VintageMaturity} from '../../../../core/services/vintage
   selector: 'app-peak-window',
   standalone: true,
   templateUrl: './peak-window.component.html',
-  styleUrl: './peak-window.component.scss'
 })
 export class PeakWindowComponent {
   status = input.required<DrinkingStatus>();

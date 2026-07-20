@@ -1,13 +1,13 @@
-<div class="wine-detail">
+<div class="max-w-[50rem] mx-auto py-12 px-6 sm:px-10">
 
-  <div class="page-header">
-    <a class="back" routerLink="/bottles">← Ma cave</a>
+  <div class="mb-6">
+    <a class="text-[0.8125rem] text-ink-light no-underline transition duration-150 hover:text-terracotta" routerLink="/bottles">← Ma cave</a>
   </div>
 
   @if (bottle()) {
     <app-wine-hero-card [bottle]="bottle()!" />
 
-    <div class="peak-section">
+    <div>
       <app-peak-window
         [status]="vintageStatus().status"
         [maturity]="vintageStatus().maturity"
@@ -15,15 +15,15 @@
     </div>
 
     @if (bottle()!.notes) {
-      <div class="tasting-section">
-        <div class="section-label">Note de dégustation</div>
+      <div class="bg-surface rounded-2xl border-[0.5px] border-border p-6 mb-4">
+        <div class="font-body text-[0.6875rem] font-medium text-ink-light uppercase tracking-[0.1em] mb-3">Note de dégustation</div>
         <app-tasting-note [note]="bottle()!.notes!" />
       </div>
     }
 
-    <div class="actions">
+    <div class="flex justify-between items-center flex-wrap gap-3 mt-6">
       <app-button variant="danger" size="sm" (clicked)="onDelete()">Supprimer</app-button>
-      <div class="actions-right">
+      <div class="flex gap-3">
         <app-button variant="secondary" size="sm" (clicked)="onBack()">← Retour</app-button>
         <app-button variant="primary" size="sm" (clicked)="onEdit()">Modifier</app-button>
       </div>

@@ -1,17 +1,26 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
-import { NgClass } from '@angular/common';
 import { Router } from '@angular/router';
 import { BottleService } from '../../core/services/bottle.service';
 import { WineCardComponent } from '../../shared/components/molecules/wine-card/wine-card.component';
 import { StatCellComponent } from '../../shared/components/molecules/stat-cell/stat-cell.component';
 import { Bottle, WineType } from '../../shared/models/bottle.model';
 
+const FILTER_PILL_BASE = 'rounded-full py-[0.4375rem] px-4 text-xs font-medium cursor-pointer border-[1.5px] font-body transition duration-150';
+
+const TYPE_PILL_CLASSES: Record<WineType, string> = {
+  RED: 'bg-wine-rouge-bg text-wine-rouge-text border-wine-rouge-bg',
+  WHITE: 'bg-wine-blanc-bg text-wine-blanc-text border-wine-blanc-bg',
+  PINK: 'bg-wine-pink-bg text-wine-pink-text border-wine-pink-bg',
+  SPARKLING: 'bg-wine-petillant-bg text-wine-petillant-text border-wine-petillant-bg',
+  CHAMPAGNE: 'bg-wine-champagne-bg text-wine-champagne-text border-wine-champagne-bg',
+  SWEET: 'bg-wine-liquoreux-bg text-wine-liquoreux-text border-wine-liquoreux-bg',
+};
+
 @Component({
   selector: 'app-wine-list',
   standalone: true,
-  imports: [NgClass, WineCardComponent, StatCellComponent],
+  imports: [WineCardComponent, StatCellComponent],
   templateUrl: './wine-list.component.html',
-  styleUrl: './wine-list.component.scss'
 })
 export class WineListComponent implements OnInit {
   private bottleService = inject(BottleService);
@@ -81,5 +90,13 @@ export class WineListComponent implements OnInit {
 
   onAddClick() {
     this.router.navigate(['/bottles/new']);
+  }
+
+  get allPillClasses(): string {
+    return `${FILTER_PILL_BASE} ${this.selectedType() === null ? 'bg-surface text-terracotta border-terracotta' : 'bg-surface text-ink-mid border-border'}`;
+  }
+
+  typePillClasses(type: WineType): string {
+    return `${FILTER_PILL_BASE} ${TYPE_PILL_CLASSES[type]}`;
   }
 }

@@ -3,10 +3,7 @@
   [placeholder]="placeholder"
   [disabled]="disabled"
   [value]="value ?? ''"
-  [class.focused]="focused"
-  [class.error]="error"
-  [class.disabled]="disabled"
+  [class]="inputClasses"
   (input)="onInput($event)"
-  (focus)="focused = true; onTouched()"
-  (blur)="focused = false"
+  (focus)="onTouched()"
 />

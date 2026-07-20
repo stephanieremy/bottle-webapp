@@ -1,24 +1,24 @@
-<div class="hero-card">
+<div class="bg-surface rounded-2xl border-[0.5px] border-border p-6 sm:p-8 mb-4">
 
-  <div class="hero-top">
-    <div class="hero-left">
-      <div class="meta">
+  <div class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-6">
+    <div class="flex-1">
+      <div class="flex items-center gap-3 mb-3">
         <app-wine-type-badge [type]="bottle().type" />
-        <span class="vintage">{{ bottle().vintage }}</span>
+        <span class="font-display text-base font-bold text-gold">{{ bottle().vintage }}</span>
       </div>
-      <h1 class="name">{{ bottle().name }}</h1>
-      <div class="designation">{{ bottle().appellation }}</div>
+      <h1 class="font-display font-bold text-[1.5rem] sm:text-[2rem] text-ink leading-[1.1] mb-2">{{ bottle().name }}</h1>
+      <div class="font-notes italic text-[1.0625rem] text-ink-mid">{{ bottle().appellation }}</div>
     </div>
 
     @if (bottle().score) {
-      <div class="score">
-        <div class="score-value">{{ bottle().score }}</div>
-        <div class="score-label">pts</div>
+      <div class="flex flex-col items-center gap-1 self-start sm:ml-8">
+        <div class="font-display font-black text-[2.5rem] sm:text-[3.5rem] text-gold leading-none">{{ bottle().score }}</div>
+        <div class="font-body text-[0.625rem] text-ink-light uppercase tracking-[0.1em]">pts</div>
       </div>
     }
   </div>
 
-  <div class="stats">
+  <div class="grid grid-cols-1 sm:grid-cols-3 border-t-[0.5px] border-border">
     <app-stat-cell label="En cave" [value]="'×' + bottle().quantity" color="#3D7A58" [border]="true" />
     <app-stat-cell label="Prix / btl." [value]="bottle().price ? bottle().price + ' €' : '—'" color="#C4522A" [border]="true" />
     <app-stat-cell label="Millésime" [value]="bottle().vintage.toString()" color="#A67C2E" />

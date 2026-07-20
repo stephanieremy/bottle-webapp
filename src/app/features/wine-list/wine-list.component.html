@@ -1,12 +1,12 @@
-<div class="wine-list">
+<div class="flex flex-col">
 
   <!-- Hero -->
-  <div class="hero">
-    <div class="hero-left">
-      <div class="hero-eyebrow">Cave personnelle</div>
-      <h1 class="hero-title">Ma <span>collection</span></h1>
+  <div class="bg-bg-alt border-b-[0.5px] border-border py-8 px-6 sm:px-10 flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4">
+    <div>
+      <div class="text-[0.6875rem] font-medium text-ink-light uppercase tracking-[0.12em] mb-[0.375rem]">Cave personnelle</div>
+      <h1 class="font-display text-[1.5rem] sm:text-[2rem] font-bold text-ink leading-[1.1]">Ma <span class="text-terracotta">collection</span></h1>
     </div>
-    <div class="hero-stats">
+    <div class="flex bg-surface border-[0.5px] border-border rounded-2xl overflow-hidden">
       <app-stat-cell label="Bouteilles" [value]="totalBottles.toString()" color="#C4522A" [border]="true" />
       <app-stat-cell label="Appellations" [value]="totalAppellations.toString()" color="#3D7A58" [border]="true" />
       <app-stat-cell label="Millésimes" [value]="totalVintages.toString()" color="#A67C2E" />
@@ -14,37 +14,40 @@
   </div>
 
   <!-- Toolbar -->
-  <div class="toolbar">
-    <div class="filters">
-      <button class="filter-pill" [class.active]="selectedType() === null" (click)="filterByType(null)">Tous</button>
+  <div class="py-5 px-6 sm:px-10 flex flex-col sm:flex-row sm:justify-between sm:items-center flex-wrap gap-3">
+    <div class="flex gap-2 flex-wrap">
+      <button [class]="allPillClasses" (click)="filterByType(null)">Tous</button>
       @for (t of types; track t.value) {
         <button
-          class="filter-pill"
-          [class.active]="selectedType() === t.value"
-          [ngClass]="t.value.toLowerCase()"
+          [class]="typePillClasses(t.value)"
           (click)="filterByType(t.value)">
           {{ t.label }}
         </button>
       }
     </div>
-    <div class="search-wrapper">
+    <div class="flex items-center gap-2 bg-surface border-[0.5px] border-border rounded-full py-[0.4375rem] px-4">
       <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
         <circle cx="5.5" cy="5.5" r="4.5" stroke="#A89880" stroke-width="1.2"/>
         <path d="M9 9l2.5 2.5" stroke="#A89880" stroke-width="1.2" stroke-linecap="round"/>
       </svg>
-      <input class="search" placeholder="Rechercher un vin…" (input)="onSearch($event)" />
+      <input
+        class="border-0 bg-transparent text-[0.8125rem] text-ink font-body outline-none w-full sm:w-50 placeholder:text-ink-light"
+        placeholder="Rechercher un vin…"
+        (input)="onSearch($event)" />
     </div>
   </div>
 
   <!-- Grid -->
-  <div class="grid-section">
-    <div class="grid">
+  <div class="px-6 sm:px-10 pb-10">
+    <div class="grid grid-cols-[repeat(auto-fill,minmax(12.5rem,1fr))] gap-[0.875rem]">
       @for (bottle of filteredBottles(); track bottle.id) {
         <app-wine-card [bottle]="bottle" (clicked)="onCardClick($event)" />
       }
-      <div class="add-card" (click)="onAddClick()">
-        <div class="add-icon">+</div>
-        <span class="add-label">Ajouter un vin</span>
+      <div
+        class="group border-[1.5px] border-dashed border-border bg-bg rounded-2xl aspect-square flex flex-col items-center justify-center gap-2 cursor-pointer transition duration-150 hover:border-terracotta"
+        (click)="onAddClick()">
+        <div class="w-[1.875rem] h-[1.875rem] rounded-full border-[1.5px] border-border-strong flex items-center justify-center text-ink-light text-lg transition duration-150 group-hover:border-terracotta group-hover:text-terracotta">+</div>
+        <span class="text-xs text-ink-light font-body transition duration-150 group-hover:text-terracotta">Ajouter un vin</span>
       </div>
     </div>
   </div>

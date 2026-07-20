@@ -20,7 +20,7 @@ const WINE_GLASS_STYLES: Record<WineType, WineGlassStyle> = {
   selector: 'app-wine-glass-icon',
   standalone: true,
   templateUrl: './wine-glass-icon.component.html',
-  styleUrl: './wine-glass-icon.component.scss',
+  host: { class: 'inline-flex shrink-0' },
 })
 export class WineGlassIconComponent {
   type = input.required<WineType>();

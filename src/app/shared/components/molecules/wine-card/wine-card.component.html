@@ -1,25 +1,27 @@
-<div class="card" (click)="clicked.emit(bottle())">
-  <div class="card-top">
+<div
+  class="bg-surface border-[0.5px] border-border rounded-2xl p-[1.125rem] flex flex-col aspect-square cursor-pointer transition duration-150 hover:border-terracotta hover:ring-[0.1875rem] hover:ring-terracotta/8"
+  (click)="clicked.emit(bottle())">
+  <div class="flex justify-between items-start mb-[0.625rem]">
     <app-wine-type-badge [type]="bottle().type" />
-    <div class="card-top-right">
+    <div class="flex items-center gap-[0.375rem]">
       <app-wine-glass-icon [type]="bottle().type" [size]="28" />
-      <span class="vintage">{{ bottle().vintage }}</span>
+      <span class="font-display text-[0.8125rem] text-ink-light">{{ bottle().vintage }}</span>
     </div>
   </div>
 
-  <div class="wine-name">{{ bottle().name }}</div>
+  <div class="font-display text-[1.0625rem] font-bold text-ink leading-[1.2]">{{ bottle().name }}</div>
 
-  <div class="location">
-    <span class="appellation">{{ bottle().appellation }}</span>
+  <div class="flex flex-col gap-[0.0625rem] mt-[0.3125rem]">
+    <span class="text-[0.6875rem] text-ink-light">{{ bottle().appellation }}</span>
     @if (regionLabel()) {
-      <span class="region">{{ regionLabel() }}</span>
+      <span class="text-[0.625rem] text-ink-light opacity-65 tracking-[0.04em]">{{ regionLabel() }}</span>
     }
     @if (bottle().customRegion) {
-      <span class="region">{{ bottle().customRegion }}</span>
+      <span class="text-[0.625rem] text-ink-light opacity-65 tracking-[0.04em]">{{ bottle().customRegion }}</span>
     }
   </div>
 
-  <div class="card-bottom">
-    <span class="qty">×<span class="qty-value">{{ bottle().quantity }}</span> btl.</span>
+  <div class="flex justify-between items-center mt-auto pt-[0.625rem] border-t-[0.5px] border-bg-alt">
+    <span class="text-xs text-ink-light font-body">×<span class="text-sage font-medium">{{ bottle().quantity }}</span> btl.</span>
   </div>
 </div>

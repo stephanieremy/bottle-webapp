@@ -40,20 +40,20 @@ describe('ButtonComponent', () => {
   });
 
   it('should apply variant and size classes', () => {
-    expect(button.className).toContain('primary');
-    expect(button.className).toContain('md');
+    expect(button.className).toContain('bg-terracotta');
+    expect(button.className).toContain('py-3');
   });
 
   it('should update classes when variant changes', () => {
     host.variant = 'danger';
     fixture.detectChanges();
-    expect(button.className).toContain('danger');
+    expect(button.className).toContain('bg-error');
   });
 
   it('should update classes when size changes', () => {
     host.size = 'lg';
     fixture.detectChanges();
-    expect(button.className).toContain('lg');
+    expect(button.className).toContain('py-4');
   });
 
   it('should emit clicked when clicked and not disabled', () => {

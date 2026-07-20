@@ -9,6 +9,5 @@ import {ButtonComponent} from '../../atoms/button/button.component';
   standalone: true,
   imports: [CommonModule, RouterModule, ButtonComponent],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
 })
 export class HeaderComponent {}

@@ -7,7 +7,6 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './input.component.html',
-  styleUrl: './input.component.scss',
   providers: [{
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => InputComponent),
@@ -21,7 +20,6 @@ export class InputComponent implements ControlValueAccessor {
   @Input() error = false;
 
   value = '';
-  focused = false;
 
   onChange = (_: any) => {};
   onTouched = () => {};
@@ -34,5 +32,9 @@ export class InputComponent implements ControlValueAccessor {
   onInput(e: Event) {
     this.value = (e.target as HTMLInputElement).value;
     this.onChange(this.value);
+  }
+
+  get inputClasses(): string {
+    return `w-full bg-bg rounded-xl py-3 px-4 font-body text-[0.9375rem] text-ink outline-none transition duration-150 placeholder:text-ink-light focus:bg-surface focus:border-terracotta focus:ring-[0.1875rem] focus:ring-terracotta/8 disabled:bg-bg-alt disabled:opacity-50 disabled:cursor-not-allowed border-[1.5px] ${this.error ? 'border-error' : 'border-border'}`;
   }
 }
